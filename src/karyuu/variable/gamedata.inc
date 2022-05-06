@@ -1,0 +1,4 @@
+#if defined _KARYUU_MODULE_GAMEDATA_INCLUDED_
+	#endinput
+#endif
+#define _KARYUU_MODULE_GAMEDATA_INCLUDED_
