@@ -11,8 +11,8 @@
         <a href="https://github.com/K4ryuu/Karyuu-Library/issues">Request Feature</a>
     </b>
     <br/>
-    Love the project? Please consider donating to help it improve!
-    PayPal: paypal@kitsune-lab.dev
+    Love the project? Please consider donating to help it improve!<br/>
+    PayPal: paypal@kitsune-lab.dev<br/>
     Patreon: https://www.patreon.com/kitsunelab
 </div>
 
