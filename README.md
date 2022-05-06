@@ -10,7 +10,7 @@
         ·
         <a href="https://github.com/K4ryuu/Karyuu-Library/issues">Request Feature</a>
     </b>
-    <br/>
+    <br/> <br/>
     Love the project? Please consider donating to help it improve!<br/>
     PayPal: paypal@kitsune-lab.dev<br/>
     Patreon: https://www.patreon.com/kitsunelab
