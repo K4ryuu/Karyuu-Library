@@ -12,9 +12,10 @@
         <a href="https://github.com/K4ryuu/Karyuu-Library/issues">Report Bug</a>
         ·
         <a href="https://github.com/K4ryuu/Karyuu-Library/issues">Request Feature</a>
-    </b>
-    <br/> <br/>
-    Love the project? Please consider donating to help it improve!<br/>
+     </b>
+    <br/>
+    <b>Do not forget to give a ⭐ on the projects!</b><br/><br/>
+    <b>Love the project? Please consider donating to help it improve!</b><br/>
     PayPal: paypal@kitsune-lab.dev<br/>
     Patreon: https://www.patreon.com/kitsunelab
 </div>
