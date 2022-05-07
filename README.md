@@ -1,8 +1,10 @@
 <font face = "Trebuchet MS">
 <div align="center">
     <h2 align="center">Karyuu-Library</h2>
-    <p align="center">A collection of the most used stock functions of mine. I try to keep it up-to-date as I can.
-    There are tons of ideas and plans to create into this library, but I have low amount of time.</p>
+    <p align="center">Essentially, I have created a collection of useful stocks and functions into one massive library, to fasten the developments.
+        I want to upgrade the collection with the AlliedModders community, so if you can improve this library or attach other files or new stocks,
+        hit throw me with a pull request and let's build/enhance it together! Every contributor and also people whose functions are used other than
+        mine own ones, gets credited.</p>
     <b>
         <a href="https://github.com/K4ryuu/Karyuu-Library/releases">Download</a>
         ·
