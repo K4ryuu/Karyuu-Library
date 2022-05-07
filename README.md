@@ -1,6 +1,7 @@
 <font face = "Trebuchet MS">
 <div align="center">
-    <h2 align="center">Karyuu-Library</h2>
+    <h2 align="center">Karyuu Library | Community Collection
+</h2>
     <p align="center">Essentially, I have created a collection of useful stocks and functions into one massive library, to fasten the developments.
         I want to upgrade the collection with the AlliedModders community, so if you can improve this library or attach other files or new stocks,
         hit throw me with a pull request and let's build/enhance it together! Every contributor and also people whose functions are used other than
