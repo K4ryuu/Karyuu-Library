@@ -3,6 +3,8 @@
 #endif
 #define _KARYUU_COOKIE_INCLUDED_
 
+#include <clientprefs>
+
 stock int Karyuu_GetCookieInt(Cookie cookieHandle, int iClient)
 {
 	char sBuffer[MAX_INTEGER_LENGTH + 1];
