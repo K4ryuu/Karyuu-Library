@@ -715,8 +715,21 @@ stock void _CL_SendChatMessage(int client, int author, char[] message)
         PrintToChat(client, message);
 }
 
-/* BADNESS BELOW THIS LINE DO NOT EDIT */
+/* I have added this, because some versions of
+    the compiler reports that, the last line
+    define is undefined.
 
+   Use this function OnPluginStart, if you have error with this message:
+    error 017: undefined symbol "_CL_OnPluginStart"
+    and comment out the part below that stock. */
+stock void C_Initialize()
+{
+    _CL_proto_buff_support = (GetFeatureStatus(FeatureType_Native, "GetUserMessageType") == FeatureStatus_Available) && (GetUserMessageType() == UM_Protobuf);
+    _CL_buffer_index = CPreFormat(_CL_buffer);
+    _CL_buffer_size = sizeof(_CL_buffer) - _CL_buffer_index;
+}
+
+/* BADNESS BELOW THIS LINE DO NOT EDIT
 public void OnPluginStart()
 {
     _CL_proto_buff_support = (GetFeatureStatus(FeatureType_Native, "GetUserMessageType") == FeatureStatus_Available) && (GetUserMessageType() == UM_Protobuf);
@@ -725,4 +738,4 @@ public void OnPluginStart()
     _CL_OnPluginStart();
 }
 
-#define OnPluginStart _CL_OnPluginStart
+#define OnPluginStart _CL_OnPluginStart*/

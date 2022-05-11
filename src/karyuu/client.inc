@@ -157,6 +157,21 @@ stock int Karyuu_GetClientArmor(int iClient)
 	return GetEntProp(iClient, Prop_Data, "m_ArmorValue");
 }
 
+stock void Karyuu_ResetArmor(int iClient)
+{
+	if (Karyuu_IsValidClient(iClient))
+	{
+		SetEntProp(iClient, Prop_Send, "m_bHasHelmet", 0);
+		SetEntProp(iClient, Prop_Send, "m_ArmorValue", 0, 0);
+
+		if (GetEngineVersion() == Engine_CSGO)
+		{
+			SetEntProp(iClient, Prop_Send, "m_bHasHeavyArmor", 0);
+			SetEntProp(iClient, Prop_Send, "m_bWearingSuit", 0);
+		}
+	}
+}
+
 stock void Karyuu_SetClientArmor(int iClient, int value)
 {
 	SetEntProp(iClient, Prop_Data, "m_ArmorValue", value);
@@ -291,20 +306,7 @@ stock void Karyuu_MutePlayer(int iClient)
 stock void Karyuu_UnmutePlayer(int iClient)
 {
 	if (Karyuu_IsValidPlayer(iClient))
-	{
-		static int iDeadTalk = GetConVarInt(FindConVar("sm_deadtalk"));
-
-		if (iDeadTalk == 1 && !IsPlayerAlive(iClient))
-		{
-			SetClientListeningFlags(iClient, VOICE_LISTENALL);
-		}
-		else if (iDeadTalk == 2 && !IsPlayerAlive(iClient))
-		{
-			SetClientListeningFlags(iClient, VOICE_TEAM);
-		}
-		else
-			SetClientListeningFlags(iClient, VOICE_NORMAL);
-	}
+		SetClientListeningFlags(iClient, VOICE_NORMAL);
 }
 
 stock void Karyuu_SetThirdPerson(int iClient)
@@ -326,21 +328,6 @@ stock void Karyuu_SetFirstPerson(int client)
 		SetEntProp(iClient, Prop_Send, "m_iObserverMode", 0);
 		SetEntProp(iClient, Prop_Send, "m_bDrawViewmodel", 1);
 		SetEntProp(iClient, Prop_Send, "m_iFOV", 90);
-	}
-}
-
-stock void Karyuu_ResetArmor(int iClient)
-{
-	if (Karyuu_IsValidClient(iClient))
-	{
-		SetEntProp(iClient, Prop_Send, "m_bHasHelmet", 0);
-		SetEntProp(iClient, Prop_Send, "m_ArmorValue", 0, 0);
-
-		if (GetEngineVersion() == Engine_CSGO)
-		{
-			SetEntProp(iClient, Prop_Send, "m_bHasHeavyArmor", 0);
-			SetEntProp(iClient, Prop_Send, "m_bWearingSuit", 0);
-		}
 	}
 }
 
@@ -431,7 +418,7 @@ stock bool Karyuu_IsAdmin(int iClient)
 	return GetAdminFlag(aiAdmin, Admin_Generic);
 }
 
-stock bool Karyuu_CheckAdminFlagsByString(int iClient, const char[] sFlags)
+stock int Karyuu_CheckAdminFlagsByString(int iClient, const char[] sFlags)
 {
 	return Karyuu_ClientHasFlag(iClient, ReadFlagString(sFlags));
 }

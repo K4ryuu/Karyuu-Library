@@ -70,3 +70,4 @@
 #include <karyuu/plugin/filesystem>
 #include <karyuu/plugin/function>
 #include <karyuu/plugin/chatprocessor>
+#include <karyuu/plugin/cookie>

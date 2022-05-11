@@ -5,7 +5,7 @@
 
 stock bool Karyuu_ClearClientMenu(int iClient)
 {
-	if (!Karyuu_IsClientIndex(iClient) || IsFakeClient(client) || !IsClientInGame(client))
+	if (!Karyuu_IsClientIndex(iClient) || IsFakeClient(iClient) || !IsClientInGame(iClient))
 		return false;
 
 	CancelClientMenu(iClient);
