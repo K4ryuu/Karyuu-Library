@@ -418,7 +418,7 @@ stock bool Karyuu_IsAdmin(int iClient)
 	return GetAdminFlag(aiAdmin, Admin_Generic);
 }
 
-stock int Karyuu_CheckAdminFlagsByString(int iClient, const char[] sFlags)
+stock bool Karyuu_CheckAdminFlagsByString(int iClient, const char[] sFlags)
 {
 	return Karyuu_ClientHasFlag(iClient, ReadFlagString(sFlags));
 }
