@@ -157,6 +157,11 @@ stock int Karyuu_GetClientArmor(int iClient)
 	return GetEntProp(iClient, Prop_Data, "m_ArmorValue");
 }
 
+stock int Karyuu_GetArmor(int iClient)
+{
+	return GetEntProp(iClient, Prop_Data, "m_ArmorValue");
+}
+
 stock void Karyuu_ResetArmor(int iClient)
 {
 	if (Karyuu_IsValidClient(iClient))
@@ -226,42 +231,52 @@ stock bool Karyuu_ChangeClientTeamAlive(int iClient, int iTeam)
 
 stock void Karyuu_SetClientFrags(int iClient, int iValue)
 {
-    SetEntProp(iClient, Prop_Data, "m_iFrags", iValue);
+	SetEntProp(iClient, Prop_Data, "m_iFrags", iValue);
 }
 
 stock void Karyuu_SetClientDeaths(int iClient, int iValue)
 {
-    SetEntProp(iClient, Prop_Data, "m_iDeaths", iValue);
+	SetEntProp(iClient, Prop_Data, "m_iDeaths", iValue);
+}
+
+stock int Karyuu_GetClientDeaths(int iClient)
+{
+	return GetEntProp(iClient, Prop_Data, "m_iDeaths");
 }
 
 stock void Karyuu_SetClientMoney(int iClient, int iValue)
 {
-    SetEntProp(iClient, Prop_Send, "m_iAccount", iValue);
+	SetEntProp(iClient, Prop_Send, "m_iAccount", iValue);
 }
 
 stock void Karyuu_GiveClientMoney(int iClient, int iValue)
 {
-    SetEntProp(iClient, Prop_Send, "m_iAccount", GetEntProp(client, Prop_Send, "m_iAccount") + iValue);
-}
-
-stock void Karyuu_SetClientKevlar(int iClient, int iValue)
-{
-    SetEntProp(iClient, Prop_Send, "m_ArmorValue", iValue);
+	SetEntProp(iClient, Prop_Send, "m_iAccount", GetEntProp(client, Prop_Send, "m_iAccount") + iValue);
 }
 
 stock void Karyuu_SetClientHelmet(int iClient, bool bHasHelmet)
 {
-    SetEntProp(iClient, Prop_Send, "m_bHasHelmet", bHasHelmet);
+	SetEntProp(iClient, Prop_Send, "m_bHasHelmet", bHasHelmet);
 }
 
 stock void Karyuu_SetClientHud(int iClient, int iValue)
 {
-    SetEntProp(iClient, Prop_Send, "m_iHideHUD", iValue);
+	SetEntProp(iClient, Prop_Send, "m_iHideHUD", iValue);
+}
+
+stock int Karyuu_GetVehicle(int iClient)
+{
+	return GetEntPropEnt(iClient, Prop_Send, "m_hVehicle");
+}
+
+stock bool Karyuu_IsInVehicle(int iClient)
+{
+	return !(Karyuu_GetVehicle(iClient) == -1);
 }
 
 stock bool Karyuu_ExitVehicle(int iClient)
 {
-	int iVehicle = Client_GetVehicle(iClient);
+	int iVehicle = Karyuu_GetVehicle(iClient);
 	return iVehicle != -1 && AcceptEntityInput(iVehicle, "ExitVehicle");
 }
 
@@ -329,6 +344,16 @@ stock void Karyuu_SetFirstPerson(int client)
 		SetEntProp(iClient, Prop_Send, "m_bDrawViewmodel", 1);
 		SetEntProp(iClient, Prop_Send, "m_iFOV", 90);
 	}
+}
+
+stock void Karyuu_ToggleThirdPerson(int iClient)
+{
+	if (Karyuu_IsInThirdPerson(iClient))
+	{
+		Karyuu_SetFirstPerson(iClient);
+	}
+	else
+		Karyuu_SetThirdPerson(iClient);
 }
 
 stock void Karyuu_RadarVisibilityToggle(int iClient, bool bStatus)
@@ -432,4 +457,64 @@ stock bool Karyuu_ClientHasFlag(int iClient, int iFlags)
 
 	int iUserFlags = GetAdminFlags(aiAdmin, Access_Effective);
 	return Karyuu_ContainsBits(iUserFlags, iFlags) || Karyuu_ContainsBits(iUserFlags, ADMFLAG_ROOT);
+}
+
+stock int Karyuu_GetObserverTarget(int iClient)
+{
+	return GetEntPropEnt(iClient, Prop_Send, "m_hObserverTarget");
+}
+
+stock int Karyuu_SetObserverTarget(int iClient, int iEntity)
+{
+	SetEntPropEnt(iClient, Prop_Send, "m_hObserverTarget", iEntity);
+}
+
+stock int Karyuu_GetFOV(int iClient)
+{
+	return GetEntProp(iClient, Prop_Send, "m_iFOV");
+}
+
+stock int Karyuu_SetFOV(int iClient, int iValue)
+{
+	SetEntProp(iClient, Prop_Send, "m_iFOV", iValue);
+}
+
+stock bool Karyuu_IsInThirdPerson(int iClient)
+{
+	return view_as<bool>(GetEntProp(iClient, Prop_Data, "m_iObserverMode"));
+}
+
+stock void Karyuu_LastLocation(int iClient, const char[] sBuffer, int iLength)
+{
+	GetEntPropString(iClient, Prop_Send, "m_szLastPlaceName", sBuffer, iLength);
+}
+
+stock int Karyuu_GetScore(int iClient)
+{
+	return GetClientFrags(client);
+}
+
+stock void Karyuu_SetScore(int iClient, int iValue)
+{
+	SetEntProp(iClient, Prop_Data, "m_iFrags", iValue);
+}
+
+stock void Karyuu_RemoveAllDecals(int iClient)
+{
+	ClientCommand(iClient, "r_cleardecals");
+}
+
+stock void Karyuu_Impulse(int iClient, int iValue)
+{
+	SetEntProp(iClient, Prop_Data, "m_nImpulse", iValue);
+}
+
+stock bool Karyuu_IsClientReloading(int iClient)
+{
+	int iWeapon = Karyuu_GetActiveWeapon(iClient);
+
+	if (iWeapon == INVALID_ENT_REFERENCE)
+		return false;
+
+	return Karyuu_IsWeaponReloading(iWeapon);
 }

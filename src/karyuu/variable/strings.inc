@@ -159,6 +159,23 @@ stock bool Karyuu_StartsWith(const char[] cBuffer, const char[] cSubString)
 	return true;
 }
 
+stock bool Karyuu_EndsWith(const char[] cBuffer, const char[] cSubString)
+{
+	int n_str = strlen(cBuffer) - 1;
+	int n_subString = strlen(cSubString) - 1;
+
+	if(n_str < n_subString)
+		return false;
+
+	while (n_str != 0 && n_subString != 0)
+	{
+		if (cBuffer[n_str--] != cSubString[n_subString--])
+			return false;
+	}
+
+	return true;
+}
+
 /*
  * Count the characters in a string
  *

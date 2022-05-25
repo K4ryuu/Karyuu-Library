@@ -114,12 +114,173 @@ stock bool Karyuu_IsWeaponKnife(int iWeapon, bool bDefault = false)
 	return Karyuu_IsKnifeDefIndex(Karyuu_GetWeaponDefIndex(iWeapon)) || (bDefault && Karyuu_IsKnifeClassNameEx(iWeapon));
 }
 
-/*
- * ===  REGION  ======================================================================
- *           Name:  Property Functions
- *    Description:  Functions that is able to get/set a property of an entity
- * ===================================================================================
- */
+stock int Karyuu_GetPrimaryAmmoType(int iWeapon)
+{
+	return GetEntProp(iWeapon, Prop_Data, "m_iPrimaryAmmoType");
+}
+
+stock void Karyuu_SetPrimaryAmmoType(int iWeapon, int iType)
+{
+	SetEntProp(iWeapon, Prop_Data, "m_iPrimaryAmmoType", iType);
+}
+
+stock int Karyuu_GetSecondaryAmmoType(int iWeapon)
+{
+	return GetEntProp(iWeapon, Prop_Data, "m_iSecondaryAmmoType");
+}
+
+stock void Karyuu_SetSecondaryAmmoType(int iWeapon, int iType)
+{
+	SetEntProp(iWeapon, Prop_Data, "m_iSecondaryAmmoType", iType);
+}
+
+stock int Karyuu_GetPrimaryClip(int iWeapon)
+{
+	return GetEntProp(iWeapon, Prop_Data, "m_iClip1");
+}
+
+stock void Karyuu_SetPrimaryClip(int iWeapon, int iValue)
+{
+	SetEntProp(iWeapon, Prop_Data, "m_iClip1", iValue);
+}
+
+stock int Karyuu_GetSecondaryClip(int iWeapon)
+{
+	return GetEntProp(iWeapon, Prop_Data, "m_iClip2");
+}
+
+stock void Karyuu_SetSecondaryClip(int iWeapon, int iValue)
+{
+	SetEntProp(iWeapon, Prop_Data, "m_iClip2", iValue);
+}
+
+stock void Karyuu_SetClips(int iWeapon, int iPrimary, int iSecondary)
+{
+	Karyuu_SetPrimaryClip(iWeapon, iPrimary);
+	Karyuu_SetSecondaryClip(iWeapon, iSecondary);
+}
+
+stock int Karyuu_GetPrimaryAmmoCount(int iWeapon)
+{
+	return GetEntProp(iWeapon, Prop_Data, "m_iPrimaryAmmoCount");
+}
+
+stock void Karyuu_SetPrimaryAmmoCount(int iWeapon, int iValue)
+{
+	SetEntProp(iWeapon, Prop_Data, "m_iPrimaryAmmoCount", iValue);
+}
+
+stock int Karyuu_GetSecondaryAmmoCount(int iWeapon)
+{
+	return GetEntProp(iWeapon, Prop_Data, "m_iSecondaryAmmoCount");
+}
+
+stock void Karyuu_SetSecondaryAmmoCount(int iWeapon, int iValue)
+{
+	SetEntProp(iWeapon, Prop_Data, "m_iSecondaryAmmoCount", iValue);
+}
+
+stock void Karyuu_SetAmmoCounts(int iWeapon, int iPrimary, int iSecondary)
+{
+	Karyuu_SetPrimaryAmmoCount(iWeapon, iPrimary);
+	Karyuu_SetSecondaryAmmoCount(iWeapon, iSecondary);
+}
+
+stock int Karyuu_GetViewModelIndex(int iWeapon)
+{
+	return GetEntProp(iWeapon, Prop_Data, "m_nViewModelIndex");
+}
+
+stock void Karyuu_SetViewModelIndex(int iWeapon, int iIndex)
+{
+	SetEntProp(iWeapon, Prop_Data, "m_nViewModelIndex", iIndex);
+	ChangeEdictState(iWeapon, FindDataMapInfo(iWeapon, "m_nViewModelIndex"));
+}
+
+stock bool Karyuu_IsWeaponReloading(int iWeapon)
+{
+	return view_as<bool>(GetEntProp(iWeapon, Prop_Data, "m_bInReload"));
+}
+
+stock void Karyuu_SetShootingSound(int iEntity, const char[] sSound)
+{
+	SetEntPropString(iEntity, Prop_Data, "m_iszShootSound", sSound);
+}
+
+stock int Karyuu_GetClientActiveSlot(int iClient)
+{
+	if (!Karyuu_IsClientIndex(iClient) || !IsClientInGame(iClient) || !IsPlayerAlive(iClient))
+		return INVALID_ENT_REFERENCE;
+
+	int iWeapon = GetEntPropEnt(iClient, Prop_Send, "m_hActiveWeapon");
+
+	if (Karyuu_IsValidEntity(iWeapon))
+		return INVALID_ENT_REFERENCE;
+
+	for (int iSlot = 0; iSlot < 5; iSlot++)
+	{
+		if (GetPlayerWeaponSlot(iClient, iSlot) != iWeapon)
+			continue;
+
+		return iSlot;
+	}
+	return INVALID_ENT_REFERENCE;
+}
+
+stock bool Karyuu_ClientHasGun(int iClient)
+{
+	return Karyuu_PlayerHasPrimary(iClient) || Karyuu_PlayerHasSecondary(iClient);
+}
+
+stock bool Karyuu_PlayerHasPrimary(int iClient)
+{
+	return GetPlayerWeaponSlot(iClient, CS_SLOT_PRIMARY) != -1;
+}
+
+stock bool Karyuu_PlayerHasSecondary(int iClient)
+{
+	return GetPlayerWeaponSlot(iClient, CS_SLOT_SECONDARY) != -1;
+}
+
+stock bool Karyuu_HasWeapon(int iClient, const char[] sClassName)
+{
+	return Karyuu_GetClientWeapon(iClient, sClassName) != INVALID_ENT_REFERENCE;
+}
+
+stock int Karyuu_GetWeaponSlot(int iClient, int iWeapon)
+{
+	if (!Karyuu_IsClientIndex(iClient) || !IsClientInGame(iClient) || !IsPlayerAlive(iClient) || !Karyuu_IsValidEntity(iWeapon))
+		return INVALID_ENT_REFERENCE;
+
+	for (int iSlot = 0; iSlot < 5; iSlot++)
+	{
+		if (GetPlayerWeaponSlot(iClient, iSlot) != iWeapon)
+			continue;
+
+		return iSlot;
+	}
+	return INVALID_ENT_REFERENCE;
+}
+
+stock int Karyuu_GetClientWeapon(int iClient, const char[] cSearchClassName)
+{
+	char cClassName[MAX_WEAPON_STRING];
+	int	 iWeapon, iSize = GetEntPropArraySize(iClient, Prop_Send, "m_hMyWeapons");
+
+	for (int i = 0; i < iSize; i++)
+	{
+		iWeapon = GetEntPropEnt(iClient, Prop_Send, "m_hMyWeapons", i);
+
+		if (!IsValidEdict(iWeapon))
+			continue;
+
+		Karyuu_GetClassName(iWeapon, STRING(cClassName));
+
+		if (Karyuu_StrEquals(cClassName, cSearchClassName))
+			return iWeapon;
+	}
+	return INVALID_ENT_REFERENCE;
+}
 
 stock int Karyuu_GetClassnameByWeapon(int iWeapon, char[] sClassName, int iLength)
 {
@@ -245,81 +406,6 @@ stock void Karyuu_StripAllClientWeapons()
 	{
 		Karyuu_StripClientWeapons(iClient);
 	}
-}
-
-stock void Karyuu_SetShootingSound(int iEntity, const char[] sSound)
-{
-	SetEntPropString(iEntity, Prop_Data, "m_iszShootSound", sSound);
-}
-
-stock int Karyuu_GetClientActiveSlot(int iClient)
-{
-	if (!Karyuu_IsClientIndex(iClient) || !IsClientInGame(iClient) || !IsPlayerAlive(iClient))
-		return INVALID_ENT_REFERENCE;
-
-	int iWeapon = GetEntPropEnt(iClient, Prop_Send, "m_hActiveWeapon");
-
-	if (Karyuu_IsValidEntity(iWeapon))
-		return INVALID_ENT_REFERENCE;
-
-	for (int iSlot = 0; iSlot < 5; iSlot++)
-	{
-		if (GetPlayerWeaponSlot(iClient, iSlot) != iWeapon)
-			continue;
-
-		return iSlot;
-	}
-	return INVALID_ENT_REFERENCE;
-}
-
-stock bool Karyuu_ClientHasGun(int iClient)
-{
-	return Karyuu_PlayerHasPrimary(iClient) || Karyuu_PlayerHasSecondary(iClient);
-}
-
-stock bool Karyuu_PlayerHasPrimary(int iClient)
-{
-	return GetPlayerWeaponSlot(iClient, CS_SLOT_PRIMARY) != -1;
-}
-
-stock bool Karyuu_PlayerHasSecondary(int iClient)
-{
-	return GetPlayerWeaponSlot(iClient, CS_SLOT_SECONDARY) != -1;
-}
-
-stock int Karyuu_GetWeaponSlot(int iClient, int iWeapon)
-{
-	if (!Karyuu_IsClientIndex(iClient) || !IsClientInGame(iClient) || !IsPlayerAlive(iClient) || !Karyuu_IsValidEntity(iWeapon))
-		return INVALID_ENT_REFERENCE;
-
-	for (int iSlot = 0; iSlot < 5; iSlot++)
-	{
-		if (GetPlayerWeaponSlot(iClient, iSlot) != iWeapon)
-			continue;
-
-		return iSlot;
-	}
-	return INVALID_ENT_REFERENCE;
-}
-
-stock int Karyuu_GetClientWeapon(int iClient, const char[] cSearchClassName)
-{
-	char cClassName[MAX_WEAPON_STRING];
-	int	 iWeapon, iSize = GetEntPropArraySize(iClient, Prop_Send, "m_hMyWeapons");
-
-	for (int i = 0; i < iSize; i++)
-	{
-		iWeapon = GetEntPropEnt(iClient, Prop_Send, "m_hMyWeapons", i);
-
-		if (!IsValidEdict(iWeapon))
-			continue;
-
-		Karyuu_GetClassName(iWeapon, STRING(cClassName));
-
-		if (Karyuu_StrEquals(cClassName, cSearchClassName))
-			return iWeapon;
-	}
-	return INVALID_ENT_REFERENCE;
 }
 
 stock bool Karyuu_ChangeWeapon(int iClient, const char[] cClassName)
