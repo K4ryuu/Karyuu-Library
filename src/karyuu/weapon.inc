@@ -15,7 +15,7 @@ char gKaryuu_WeaponClasses[][] = {
 	/*28*/ "weapon_ssg08", /*29*/ "weapon_aug", /*30*/ "weapon_sg556", /*31*/ "weapon_scar20", /*32*/ "weapon_g3sg1", /*33*/ "weapon_knife_karambit", /*34*/ "weapon_knife_m9_bayonet", /*35*/ "weapon_bayonet",
 	/*36*/ "weapon_knife_survival_bowie", /*37*/ "weapon_knife_butterfly", /*38*/ "weapon_knife_flip", /*39*/ "weapon_knife_push", /*40*/ "weapon_knife_tactical", /*41*/ "weapon_knife_falchion", /*42*/ "weapon_knife_gut",
 	/*43*/ "weapon_knife_ursus", /*44*/ "weapon_knife_gypsy_jackknife", /*45*/ "weapon_knife_stiletto", /*46*/ "weapon_knife_widowmaker", /*47*/ "weapon_mp5sd", /*48*/ "weapon_knife_css", /*49*/ "weapon_knife_cord",
-	/*50*/ "weapon_knife_canis", /*51*/ "weapon_knife_outdoor", /*52*/ "weapon_knife_skeleton"
+	/*50*/ "weapon_knife_canis", /*51*/ "weapon_knife_outdoor", /*52*/ "weapon_knife_skeleton", /*53*/ "weapon_knife", /*54*/ "weapon_knife_t", /*55*/ "weapon_knife"
 };
 
 int gKaryuu_iWeaponDefIndex[] = {
@@ -25,11 +25,11 @@ int gKaryuu_iWeaponDefIndex[] = {
 	/*28*/ 40, /*29*/ 8, /*30*/ 39, /*31*/ 38, /*32*/ 11, /*33*/ 507, /*34*/ 508, /*35*/ 500,
 	/*36*/ 514, /*37*/ 515, /*38*/ 505, /*39*/ 516, /*40*/ 509, /*41*/ 512, /*42*/ 506,
 	/*43*/ 519, /*44*/ 520, /*45*/ 522, /*46*/ 523, /*47*/ 23, /*48*/ 503, /*49*/ 517,
-	/*50*/ 518, /*51*/ 521, /*52*/ 525
+	/*50*/ 518, /*51*/ 521, /*52*/ 525, /*53*/ 41, /*54*/ 59, /*55*/ 42
 };
 
 int gKaryuu_iKnifeIndices[] = {
-	33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 48, 49, 50, 51, 52
+	33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 48, 49, 50, 51, 52, 53, 54, 55
 };
 
 /*
@@ -289,29 +289,13 @@ stock int Karyuu_GetClassnameByWeapon(int iWeapon, char[] sClassName, int iLengt
 
 stock bool Karyuu_GetClassnameByDefIndex(int iDefIndex, char[] sClassName, int iLength)
 {
-	switch(iDefIndex)
+	int iSize = sizeof(gKaryuu_iWeaponDefIndex);
+	for (int iWeapon = 0; iWeapon < iSize; iWeapon++)
 	{
-		case 42:
+		if (gKaryuu_iWeaponDefIndex[iWeapon] == iDefIndex)
 		{
-			FormatEx(sClassName, iLength, "weapon_knife");
+			strcopy(sClassName, iLength, gKaryuu_WeaponClasses[iWeapon]);
 			return true;
-		}
-		case 59:
-		{
-			FormatEx(sClassName, iLength, "weapon_knife_t");
-			return true;
-		}
-		default:
-		{
-			int iSize = sizeof(gKaryuu_iWeaponDefIndex);
-			for (int iWeapon = 0; iWeapon < iSize; iWeapon++)
-			{
-				if (gKaryuu_iWeaponDefIndex[iWeapon] == iDefIndex)
-				{
-					strcopy(sClassName, iLength, gKaryuu_WeaponClasses[iWeapon]);
-					return true;
-				}
-			}
 		}
 	}
 	return false;
@@ -323,7 +307,7 @@ stock int Karyuu_GetWeaponDefIndexByClassName(char[] sClassName)
 	for (int i = 0; i < iSize; i++)
 	{
 		if (Karyuu_StrEquals(sClassName, gKaryuu_WeaponClasses[i]))
-			return i;
+			return gKaryuu_iWeaponDefIndex[i];
 	}
 	return -1;
 }
