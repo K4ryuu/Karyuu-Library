@@ -4,7 +4,6 @@
 #define _KARYUU_MODULE_STRING_INCLUDED_
 
 #define STRING(%1) %1, sizeof(%1)
-#define STRING_EMPTY "\0"
 
 stock bool Karyuu_IsStringEmpty(const char[] sBuffer)
 {
