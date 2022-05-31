@@ -141,7 +141,7 @@ stock bool Karyuu_IsWarmUpPeriod()
 
 stock float Karyuu_WarmupTimeLeft()
 {
-	return GameRules_GetProp("m_fWarmupPeriodEnd");
+	return GameRules_GetPropFloat("m_fWarmupPeriodEnd");
 }
 
 stock bool Karyuu_IsOvertime()

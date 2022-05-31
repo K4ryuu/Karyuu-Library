@@ -6,8 +6,8 @@
 #define MAX_AUTH_LENGTH			  21
 #define MAX_IP_LENGTH 				23
 
-#define KARYUU_LOOP_CLIENTS(%1) for (int %1 = 0; %1 <= MAXPLAYERS + 1; %1++) if (Karyuu_IsValidClient(%1))
-#define KARYUU_LOOP_PLAYERS(%1) for (int %1 = 0; %1 <= MAXPLAYERS + 1; %1++) if (Karyuu_IsValidPlayer(%1))
+#define KARYUU_LOOP_CLIENTS(%1) for (int %1 = 1; %1 <= MAXPLAYERS + 1; %1++) if (IsClientInGame(%1))
+#define KARYUU_LOOP_PLAYERS(%1) for (int %1 = 1; %1 <= MAXPLAYERS + 1; %1++) if (IsClientInGame(%1) && !IsFakeClient(%1))
 
 enum WaterLevel
 {

@@ -15,15 +15,10 @@ stock bool Karyuu_RandomBool()
 
 stock int Karyuu_RandomInt(int iMin, int iMax)
 {
-	int iRandom = GetURandomInt();
-
-	if (iRandom == 0)
-		iRandom++;
-
-	return RoundToCeil(float(iRandom) / (float(MAX_INTEGER_VALUE) / float(iMax - iMin + 1))) + iMin - 1;
+	return RoundToZero(Karyuu_RandomFloat(float(iMin), float(iMax)));
 }
 
-stock float Karyuu_RandomFloat(float min, float max)
+stock float Karyuu_RandomFloat(float iMin, float iMax)
 {
-	return (GetURandomFloat() * (max - min)) + min;
+	return GetURandomFloat() * (iMax - iMin + 1) + iMin;
 }
