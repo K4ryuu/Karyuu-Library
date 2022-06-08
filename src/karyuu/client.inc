@@ -6,8 +6,8 @@
 #define MAX_AUTH_LENGTH			  21
 #define MAX_IP_LENGTH 				23
 
-#define KARYUU_LOOP_CLIENTS(%1) for (int %1 = 1; %1 <= MAXPLAYERS + 1; %1++) if (IsClientInGame(%1))
-#define KARYUU_LOOP_PLAYERS(%1) for (int %1 = 1; %1 <= MAXPLAYERS + 1; %1++) if (IsClientInGame(%1) && !IsFakeClient(%1))
+#define KARYUU_LOOP_CLIENTS(%1) for (int %1 = 1; %1 <= MAXPLAYERS; %1++) if (IsClientInGame(%1))
+#define KARYUU_LOOP_PLAYERS(%1) for (int %1 = 1; %1 <= MAXPLAYERS; %1++) if (IsClientInGame(%1) && !IsFakeClient(%1))
 
 enum WaterLevel
 {
@@ -242,6 +242,11 @@ stock void Karyuu_SetClientDeaths(int iClient, int iValue)
 stock int Karyuu_GetClientDeaths(int iClient)
 {
 	return GetEntProp(iClient, Prop_Data, "m_iDeaths");
+}
+
+stock int Karyuu_GetClientMoney(int iClient)
+{
+   return GetEntProp(iClient, Prop_Send, "m_iAccount");
 }
 
 stock void Karyuu_SetClientMoney(int iClient, int iValue)

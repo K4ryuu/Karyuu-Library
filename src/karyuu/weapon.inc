@@ -5,8 +5,24 @@
 
 #define MAX_WEAPON_CLASSNAME_LENGTH 24
 #define MAX_WEAPON_NAME_LENGTH		48
-#define MAX_WEAPON_PREFIX_LENGTH	6
-#define MAX_WEAPONS 				48
+#define MAX_WEAPON_PREFIX_LENGTH		6
+#define MAX_WEAPONS 						48
+
+#define Karyuu_HITGROUP_GENERIC    			0
+#define Karyuu_HITGROUP_HEAD        		1
+#define Karyuu_HITGROUP_CHEST        		2
+#define Karyuu_HITGROUP_STOMACH    			3
+#define Karyuu_HITGROUP_LEFTARM    			4
+#define Karyuu_HITGROUP_RIGHTARM    		5
+#define Karyuu_HITGROUP_LEFTLEG    			6
+#define Karyuu_HITGROUP_RIGHTLEG    		7
+#define Karyuu_HITGROUP_GEAR        		10
+
+#define Karyuu_HEGrenadeOffset         	14
+#define Karyuu_FlashbangOffset         	15
+#define Karyuu_SmokegrenadeOffset        	16
+#define Karyuu_IncGrenadesOffset        	17
+#define Karyuu_DecoyGrenadeOffset        	18
 
 char gKaryuu_WeaponClasses[][] = {
 	/* 0*/ "weapon_awp", /* 1*/ "weapon_ak47", /* 2*/ "weapon_m4a1", /* 3*/ "weapon_m4a1_silencer", /* 4*/ "weapon_deagle", /* 5*/ "weapon_usp_silencer", /* 6*/ "weapon_hkp2000", /* 7*/ "weapon_glock", /* 8*/ "weapon_elite",

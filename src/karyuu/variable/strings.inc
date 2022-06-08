@@ -207,3 +207,25 @@ stock int Karyuu_CountChar(int character, const char[] string)
 	}
 	return count;
 }
+
+stock void Karyuu_ShuffleString(char[] sBuffer, int iSize)
+{
+	ArrayList arTemp = new ArrayList();
+
+	for (int iCount = 0; iCount < iSize; iCount++)
+	{
+		if (sBuffer[iCount] == EOS)
+			break;
+
+		arTemp.Push(sBuffer[iCount]);
+	}
+
+	arTemp.Sort(Sort_Random, Sort_String);
+
+	int iarSize = arTemp.Length;
+	for (int iCount = 0; iCount < iarSize; iCount++)
+	{
+		sBuffer[iCount] = view_as<char>(arTemp.Get(iCount));
+	}
+	delete arTemp;
+}
