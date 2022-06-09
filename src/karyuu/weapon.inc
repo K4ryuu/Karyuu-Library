@@ -23,6 +23,7 @@
 #define Karyuu_SmokegrenadeOffset        	16
 #define Karyuu_IncGrenadesOffset        	17
 #define Karyuu_DecoyGrenadeOffset        	18
+#define Karyuu_HealthShotOffset 				21
 
 char gKaryuu_WeaponClasses[][] = {
 	/* 0*/ "weapon_awp", /* 1*/ "weapon_ak47", /* 2*/ "weapon_m4a1", /* 3*/ "weapon_m4a1_silencer", /* 4*/ "weapon_deagle", /* 5*/ "weapon_usp_silencer", /* 6*/ "weapon_hkp2000", /* 7*/ "weapon_glock", /* 8*/ "weapon_elite",
@@ -276,6 +277,20 @@ stock int Karyuu_GetWeaponSlot(int iClient, int iWeapon)
 		return iSlot;
 	}
 	return INVALID_ENT_REFERENCE;
+}
+
+stock int Karyuu_GetClientGrenades(int iClient)
+{
+	return GetEntProp(iClient, Prop_Send, "m_iAmmo", _, Karyuu_DecoyGrenadeOffset)
+		  + GetEntProp(iClient, Prop_Send, "m_iAmmo", _, Karyuu_SmokegrenadeOffset)
+		  + GetEntProp(iClient, Prop_Send, "m_iAmmo", _, Karyuu_FlashbangOffset)
+		  + GetEntProp(iClient, Prop_Send, "m_iAmmo", _, Karyuu_IncGrenadesOffset)
+		  + GetEntProp(iClient, Prop_Send, "m_iAmmo", _, Karyuu_HEGrenadeOffset);
+}
+
+stock int GetClientHealtshots(int iClient)
+{
+   return GetEntProp(iClient, Prop_Send, "m_iAmmo", _, Karyuu_HealthShotOffset);
 }
 
 stock int Karyuu_GetClientWeapon(int iClient, const char[] cSearchClassName)

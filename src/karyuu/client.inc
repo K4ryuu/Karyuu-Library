@@ -302,6 +302,21 @@ stock void Karyuu_ShowOverlayToClient(int iClient, const char[] cOverlayPath)
 	ClientCommand(iClient, "r_screenoverlay \"%s\"", cOverlayPath);
 }
 
+stock bool Karyuu_ClientHasDefuser(int iClient)
+{
+	return view_as<bool>(GetEntProp(iClient, Prop_Send, "m_bHasDefuser"));
+}
+
+stock void Karyuu_GiveClientDefuser(int iClient)
+{
+	SetEntProp(iClient, Prop_Send, "m_bHasDefuser", true);
+}
+
+stock void Karyuu_RemoveClientDefuser(int iClient)
+{
+	SetEntProp(iClient, Prop_Send, "m_bHasDefuser", false);
+}
+
 stock void Karyuu_ShowOverlayToAll(const char[] cOverlayPath)
 {
 	for (int iClient = 1; iClient <= MaxClients; iClient++)
