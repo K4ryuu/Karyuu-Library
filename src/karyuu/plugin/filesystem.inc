@@ -29,6 +29,9 @@ stock bool Karyuu_CreateFile(const char[] sBuffer)
 	 if (!FileExists(sPath))
 	 {
 		File fFile = OpenFile(sPath, "w");
+		if (fFile == INVALID_HANDLE)
+			SetFailState("Permission problems when creating file \"%s\"", sPath);
+
 		delete fFile;
 	 }
 
@@ -94,8 +97,7 @@ stock bool Karyuu_PrepareSound(const char[] sFile, bool bPreLoad = false, bool b
 	if (bDownload)
 		AddFileToDownloadsTable(sSound);
 
-	if (!IsSoundPrecached(sSound))
-		PrecacheSound(sSound);
+	PrecacheSound(sSound);
 
 	Karyuu_RemoveFrontString(STRING(sSound), 6);
 
