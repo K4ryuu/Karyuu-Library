@@ -38,7 +38,7 @@ stock bool Karyuu_CreateFile(const char[] sBuffer)
 	return true;
 }
 
-stock void Karyuu_CreateDirectory(const char[] szPath, int iMode = 511)
+stock bool Karyuu_CreateDirectory(const char[] szPath, int iMode = 511)
 {
 	return !DirExists(szPath) && CreateDirectory(szPath, iMode);
 }
@@ -83,7 +83,7 @@ stock int Karyuu_PrepareModel(char sModel[PLATFORM_MAX_PATH], bool bPreLoad = fa
 	return Karyuu_PreCacheModel(sModel, bPreLoad);
 }
 
-stock bool Karyuu_PrepareSound(const char[] sFile, bool bPreLoad = false, bool bDownload = true)
+stock bool Karyuu_PrepareSound(const char[] sFile, bool bDownload = true)
 {
 	if (strlen(sFile) == 0)
 		return false;
