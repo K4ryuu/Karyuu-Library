@@ -65,7 +65,6 @@ stock void CPrintToChatEx(int client, int author, const char[] message, any ...)
  * Prints a message to all clients in the chat area.
  * Supports color tags.
  *
- * @param client    Client index.
  * @param message   Message (formatting rules)
  * @return          No return
  */
@@ -78,6 +77,33 @@ stock void CPrintToChatAll(const char[] message, any ...)
             SetGlobalTransTarget(i);
 
             VFormat(_CL_buffer[_CL_buffer_index], _CL_buffer_size, message, 2);
+            CFormat(_CL_buffer[_CL_buffer_index], _CL_buffer_size);
+            PrintToChat(i, _CL_buffer);
+        }
+
+        _CL_skip_list[i] = false;
+    }
+}
+
+/**
+ * Prints a message to all clients except one specified client in the chat area.
+ * Supports color tags.
+ *
+ * @param client    Client index.
+ * @param message   Message (formatting rules)
+ * @return          No return
+ */
+stock void CPrintToChatAllExcept(int client, const char[] message, any ...)
+{
+    _CL_skip_list[client] = true;
+
+    for (int i = 1; i <= MaxClients; ++i)
+    {
+        if (IsClientInGame(i) && !IsFakeClient(i) && !_CL_skip_list[i])
+        {
+            SetGlobalTransTarget(i);
+
+            VFormat(_CL_buffer[_CL_buffer_index], _CL_buffer_size, message, 3);
             CFormat(_CL_buffer[_CL_buffer_index], _CL_buffer_size);
             PrintToChat(i, _CL_buffer);
         }
