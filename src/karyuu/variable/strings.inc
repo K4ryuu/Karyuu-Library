@@ -15,6 +15,9 @@ stock bool Karyuu_IsStringSimpleNumber(const char[] sBuffer)
 	int iLength = strlen(sBuffer);
 	for (int i = 0; i < iLength; i++)
 	{
+		if (sBuffer[i] == EOS)
+			break;
+
 		if (!IsCharNumeric(sBuffer[i]))
 			return false;
 	}
