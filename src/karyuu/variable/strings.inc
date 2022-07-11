@@ -10,6 +10,20 @@ stock bool Karyuu_IsStringEmpty(const char[] sBuffer)
 	return !sBuffer[0] || strlen(sBuffer) == 0;
 }
 
+stock bool Karyuu_IsStringSimpleNumber(const char[] sBuffer)
+{
+	int iTarget;
+	while (sBuffer[iTarget] != EOS)
+	{
+		if (!IsCharNumeric(sBuffer[iTarget]))
+			return false;
+
+		iTarget++;
+	}
+
+	return true;
+}
+
 stock bool Karyuu_IsStringNumber(const char[] sBuffer)
 {
 	int iTarget, iDots, iNumbers;
