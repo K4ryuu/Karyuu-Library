@@ -98,7 +98,7 @@ stock void Karyuu_UnPauseMatch()
 
 stock void Karyuu_RestartGame(int iDelay)
 {
-	ServerCommand("mp_restartgame %d", iDelay);
+	ServerCommand("mp_restartgame %d", iDelay < 1 ? 1 : iDelay);
 }
 
 /*
