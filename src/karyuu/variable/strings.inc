@@ -12,13 +12,11 @@ stock bool Karyuu_IsStringEmpty(const char[] sBuffer)
 
 stock bool Karyuu_IsStringSimpleNumber(const char[] sBuffer)
 {
-	int iTarget;
-	while (sBuffer[iTarget] != EOS)
+	int iLength = strlen(sBuffer);
+	for (int i = 0; i < iLength; i++)
 	{
-		if (!IsCharNumeric(sBuffer[iTarget]))
+		if (!IsCharNumeric(sBuffer[i]))
 			return false;
-
-		iTarget++;
 	}
 
 	return true;
