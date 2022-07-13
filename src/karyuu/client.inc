@@ -538,3 +538,13 @@ stock bool Karyuu_IsClientReloading(int iClient)
 
 	return Karyuu_IsWeaponReloading(iWeapon);
 }
+
+stock int GetPing(int iClient)
+{
+	return RoundFloat(GetClientLatency(iClient, NetFlow_Both) * 1000.0);
+}
+
+stock int GetLoss(int iClient)
+{
+	return RoundFloat(GetClientAvgLoss(iClient, NetFlow_Both));
+}
