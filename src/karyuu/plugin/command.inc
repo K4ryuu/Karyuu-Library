@@ -12,9 +12,12 @@
 #endif
 #define _KARYUU_COMMANDS_INCLUDED_
 
-stock void Karyuu_RegCommand(const char[] cCommand, ConCmd ccCallBack, const char[] cDescription = "", int iFlag = -1)
+stock void Karyuu_RegCommand(const char[] cCommand, ConCmd ccCallBack, const char[] cDescription = "", int iFlag = -1, bool bIgnoreExistance = false)
 {
 	// - Check the given iFlag wether it's an admin command or not
+	if (!bIgnoreExistance && Karyuu_IsCommandExists(cCommand))
+		return;
+
 	if (iFlag == -1)
 	{
 		RegConsoleCmd(cCommand, ccCallBack, cDescription);
