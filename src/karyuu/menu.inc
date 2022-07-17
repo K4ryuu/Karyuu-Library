@@ -43,7 +43,7 @@ stock char Karyuu_Menu_GetSelect(Menu menu, int iParam)
 	return cBuffer;
 }
 
-stock void Karyuu_Menu_Send(Menu menu, int iClient, bool ExitBack = false, bool Exit = true, int time = 30)
+stock void Karyuu_Menu_Send(Menu menu, int iClient, bool ExitBack = false, bool Exit = true, int time = MENU_TIME_FOREVER)
 {
 	menu.ExitBackButton = ExitBack;
 	menu.ExitButton		= Exit;
@@ -83,7 +83,7 @@ stock void Karyuu_Panel_AddText(Panel TargetPanel, const char[] myString, any...
 	TargetPanel.DrawText(myFormattedString);
 }
 
-stock void Karyuu_Panel_Send(Panel TargetPanel, MenuHandler handler, int iClient, int time = 30)
+stock void Karyuu_Panel_Send(Panel TargetPanel, MenuHandler handler, int iClient, int time = MENU_TIME_FOREVER)
 {
 	TargetPanel.Send(iClient, handler, time);
 	delete TargetPanel;
