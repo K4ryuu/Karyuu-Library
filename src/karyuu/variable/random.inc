@@ -20,5 +20,5 @@ stock int Karyuu_RandomInt(int iMin, int iMax)
 
 stock float Karyuu_RandomFloat(float iMin, float iMax)
 {
-	return GetURandomFloat() * (iMax - iMin + 1) + iMin;
+	return GetURandomFloat() * (iMax - iMin) + iMin;
 }
