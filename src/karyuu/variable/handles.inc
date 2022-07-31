@@ -89,3 +89,16 @@ stock bool Karyuu_KillTimerSafe(Handle &hTimer)
 	hTimer = null;
 	return true;
 }
+
+stock Handle LazyCloseHandle(Handle hHandle)
+{
+	if (hHandle)
+		RequestFrame(OnHandleShouldBeClosed, hHandle);
+
+	return hHandle;
+}
+
+static void OnHandleShouldBeClosed(Handle hHandle)
+{
+  hHandle.Close();
+}
