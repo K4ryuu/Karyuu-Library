@@ -244,3 +244,26 @@ stock void Karyuu_ShuffleString(char[] sBuffer, int iSize)
 	}
 	delete arTemp;
 }
+
+stock void Karyuu_GenerateUUID(char[] sBuffer, int iLength)
+{
+	FormatEx(sBuffer, iLength, "%04x%04x-%04x-%04x-%04x-%04x%04x%04x",
+		// 32 bits for "time_low"
+		GetRandomInt(0, 0xffff), GetRandomInt(0, 0xffff),
+
+		// 16 bits for "time_mid"
+		GetRandomInt(0, 0xffff),
+
+		// 16 bits for "time_hi_and_version"
+		// four most significant bits holds version number 4
+		(GetRandomInt(0, 0x0fff) | 0x4000),
+
+		// 16 bits, 8 bits for "clk_seq_hi_res",
+		// 8 bits for "clk_seq_low",
+		// two most significant bits holds zero and one for variant DCE1.1
+		(GetRandomInt(0, 0x3fff) | 0x8000),
+
+		// 48 bits for node
+		GetRandomInt(0, 0xffff), GetRandomInt(0, 0xffff), GetRandomInt(0, 0xffff)
+	);
+}
