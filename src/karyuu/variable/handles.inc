@@ -31,7 +31,7 @@ stock void Karyuu_DeleteArrayList(ArrayList &alArrayList)
 {
 	if (Karyuu_IsValidArrayList(alArrayList))
 	{
-		Karyuu_ClearArraySafe(alArrayList);
+		alArrayList.Clear();
 		delete alArrayList;
 	}
 }
@@ -43,17 +43,6 @@ stock void Karyuu_DeleteStack(ArrayStack &asArrayStack)
 		while (!asArrayStack.Empty)
 			asArrayStack.Pop();
 	}
-}
-
-stock void Karyuu_ClearArraySafe(ArrayList &alArrayList)
-{
-	for (int iData = 0; iData < alArrayList.Length; iData++)
-	{
-		Handle hHandle = alArrayList.Get(iData);
-		delete hHandle;
-	}
-
-	alArrayList.Clear();
 }
 
 stock void Karyuu_ClearTrieSafe(StringMap &smStringMap)
@@ -90,7 +79,7 @@ stock bool Karyuu_KillTimerSafe(Handle &hTimer)
 	return true;
 }
 
-stock Handle Karyuu_LazyCloseHandle(Handle hHandle)
+stock Handle Karyuu_LazyCloseHandle(Handle &hHandle)
 {
 	if (hHandle)
 		RequestFrame(Karyuu_OnHandleShouldBeClosed, hHandle);
@@ -98,7 +87,7 @@ stock Handle Karyuu_LazyCloseHandle(Handle hHandle)
 	return hHandle;
 }
 
-static void Karyuu_OnHandleShouldBeClosed(Handle hHandle)
+static void Karyuu_OnHandleShouldBeClosed(Handle &hHandle)
 {
-  hHandle.Close();
+	hHandle.Close();
 }

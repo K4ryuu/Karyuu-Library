@@ -79,6 +79,42 @@ stock char[] Karyuu_StringBuilder(const char[] cFormat, any...)
 	return cBuiltString;
 }
 
+stock char[] Karyuu_IntDotBuilder(int iValue)
+{
+	char cValue[MAX_INTEGER_LENGTH + 1];
+	FormatEx(STRING(cValue), "%d", iValue);
+
+	char cBuffer[32];
+	int iLength = strlen(cValue);
+
+	if (iLength <= 3)
+	{
+		strcopy(STRING(cBuffer), cValue);
+		return cBuffer;
+	}
+
+	int iCounter = iLength % 3;
+
+	if (iCounter == 0)
+		iCounter = 3;
+
+	for (int i = 0, j = 0; i < iLength; i++, j++)
+	{
+		if (iCounter == 0)
+		{
+			cBuffer[j] = '.';
+			j++;
+			iCounter = 2;
+		}
+		else
+			iCounter--;
+
+		cBuffer[j] = cValue[i];
+	}
+
+	return cBuffer;
+}
+
 stock int Karyuu_FlagIntToString(int iFlag)
 {
 	AdminFlag aFlag;
@@ -88,7 +124,7 @@ stock int Karyuu_FlagIntToString(int iFlag)
 
 stock char Karyuu_IntToString(int iInt)
 {
-	char cBuffer[64];
+	char cBuffer[MAX_INTEGER_LENGTH + 1];
 	FormatEx(STRING(cBuffer), "%d", iInt);
 	return cBuffer;
 }
