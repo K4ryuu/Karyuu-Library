@@ -288,7 +288,7 @@ stock int Karyuu_GetClientGrenades(int iClient)
 		  + GetEntProp(iClient, Prop_Send, "m_iAmmo", _, Karyuu_HEGrenadeOffset);
 }
 
-stock int GetClientHealtshots(int iClient)
+stock int Karyuu_GetClientHealtshots(int iClient)
 {
    return GetEntProp(iClient, Prop_Send, "m_iAmmo", _, Karyuu_HealthShotOffset);
 }
