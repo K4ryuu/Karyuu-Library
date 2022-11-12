@@ -10,12 +10,11 @@ stock bool Karyuu_DeleteFileIfExists(const char[] sPath)
 
 stock bool Karyuu_DirExistsEx(const char sPath[PLATFORM_MAX_PATH])
 {
-	if (!Karyuu_CreateDirectory(sPath))
-	{
-		LogError("Unable to create a folder at \"%s\"", sPath);
-		return false;
-	}
-	return true;
+	if (Karyuu_CreateDirectory(sPath))
+		return true;
+
+	LogError("Unable to create a folder at \"%s\"", sPath);
+	return false;
 }
 
 stock bool Karyuu_CreateFile(const char[] sBuffer)
