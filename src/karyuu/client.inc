@@ -256,7 +256,7 @@ stock void Karyuu_SetClientMoney(int iClient, int iValue)
 
 stock void Karyuu_GiveClientMoney(int iClient, int iValue)
 {
-	SetEntProp(iClient, Prop_Send, "m_iAccount", GetEntProp(client, Prop_Send, "m_iAccount") + iValue);
+	SetEntProp(iClient, Prop_Send, "m_iAccount", GetEntProp(iClient, Prop_Send, "m_iAccount") + iValue);
 }
 
 stock void Karyuu_SetClientHelmet(int iClient, bool bHasHelmet)
