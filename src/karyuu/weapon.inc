@@ -49,6 +49,10 @@ int gKaryuu_iKnifeIndices[] = {
 	33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 48, 49, 50, 51, 52, 53, 54, 55
 };
 
+int gKaryuu_iGloveIndices[] = {
+	5027, 5030, 5031, 5032, 5033, 5034, 5035, 4725
+};
+
 /*
  * ===  REGION  ======================================================================
  *           Name:  Validation Functions
@@ -98,6 +102,17 @@ stock bool Karyuu_IsValidWeaponDefIndex(int iIndex)
 	for (int iWeapon = 0; iWeapon < iSize; iWeapon++)
 	{
 		if (gKaryuu_iWeaponDefIndex[iWeapon] == iIndex)
+			return true;
+	}
+	return false;
+}
+
+stock bool Karyuu_IsGloveDefIndex(int iIndex)
+{
+	int iSize = sizeof(gKaryuu_iGloveIndices);
+	for (int iGlove = 0; iGlove < iSize; iGlove++)
+	{
+		if (gKaryuu_iGloveIndices[iGlove] == iIndex)
 			return true;
 	}
 	return false;
