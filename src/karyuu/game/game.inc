@@ -76,7 +76,7 @@ stock void Karyuu_PauseMatch(int iTime = 0, int iTeam = CS_TEAM_NONE)
 	{
 		ServerCommand("mp_pause_match");
 
-		if (csTeam == CS_TEAM_T)
+		if (iTeam == CS_TEAM_T)
 		{
 			GameRules_SetProp("m_bTerroristTimeOutActive", true);
 			GameRules_SetPropFloat("m_flTerroristTimeOutRemaining", float(iTime));
@@ -131,10 +131,10 @@ stock RoundState Karyuu_GetRoundState()
 
 stock GamePhase Karyuu_GetGamePhase()
 {
-	return Karyuu_GetPropBool("m_gamePhase");
+	return view_as<GamePhase>(GameRules_GetProp("m_gamePhase"));
 }
 
-stock bool Karyuu_IsWarmUpPeriod()
+stock bool Karyuu_IsWarmupPeriod()
 {
 	return Karyuu_GetPropBool("m_bWarmupPeriod");
 }
@@ -194,7 +194,7 @@ stock bool Karyuu_IsTVEnabled()
 
 stock int Karyuu_GetTvDelay()
 {
-	return (Karyuu_IsTVEnabled() ? GetCvarIntSafe("tv_delay") : 0);
+	return (Karyuu_IsTVEnabled() ? Karyuu_GetConVarIntSafe("tv_delay") : 0);
 }
 
 stock bool Karyuu_StartRecord(const char[] cDemo)

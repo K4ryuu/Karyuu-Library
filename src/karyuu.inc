@@ -38,15 +38,14 @@
 	#define CS_SLOT_UTILITY     12  /* Slot for tablet */
 #endif
 
+#include <karyuu/defines>
+
+#include <karyuu/variable/strings>
 #include <karyuu/variable/bit>
-#include <karyuu/variable/convert>
-#include <karyuu/variable/datetime>
 #include <karyuu/variable/float>
-#include <karyuu/variable/gamedata>
 #include <karyuu/variable/handles>
 #include <karyuu/variable/int>
 #include <karyuu/variable/random>
-#include <karyuu/variable/strings>
 
 #include <karyuu/game/team>
 #include <karyuu/game/game>
@@ -57,7 +56,6 @@
 #include <karyuu/prop>
 #include <karyuu/offset>
 #include <karyuu/entity>
-#include <karyuu/dump>
 #include <karyuu/client>
 #include <karyuu/weapon>
 #include <karyuu/menu>

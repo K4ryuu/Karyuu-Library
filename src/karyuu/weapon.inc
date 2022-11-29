@@ -3,28 +3,6 @@
 #endif
 #define _KARYUU_MODULE_WEAPON_INCLUDED_
 
-#define MAX_WEAPON_CLASSNAME_LENGTH 24
-#define MAX_WEAPON_NAME_LENGTH		48
-#define MAX_WEAPON_PREFIX_LENGTH		6
-#define MAX_WEAPONS 						48
-
-#define Karyuu_HITGROUP_GENERIC    			0
-#define Karyuu_HITGROUP_HEAD        		1
-#define Karyuu_HITGROUP_CHEST        		2
-#define Karyuu_HITGROUP_STOMACH    			3
-#define Karyuu_HITGROUP_LEFTARM    			4
-#define Karyuu_HITGROUP_RIGHTARM    		5
-#define Karyuu_HITGROUP_LEFTLEG    			6
-#define Karyuu_HITGROUP_RIGHTLEG    		7
-#define Karyuu_HITGROUP_GEAR        		10
-
-#define Karyuu_HEGrenadeOffset         	14
-#define Karyuu_FlashbangOffset         	15
-#define Karyuu_SmokegrenadeOffset        	16
-#define Karyuu_IncGrenadesOffset        	17
-#define Karyuu_DecoyGrenadeOffset        	18
-#define Karyuu_HealthShotOffset 				21
-
 char gKaryuu_WeaponClasses[][] = {
 	/* 0*/ "weapon_awp", /* 1*/ "weapon_ak47", /* 2*/ "weapon_m4a1", /* 3*/ "weapon_m4a1_silencer", /* 4*/ "weapon_deagle", /* 5*/ "weapon_usp_silencer", /* 6*/ "weapon_hkp2000", /* 7*/ "weapon_glock", /* 8*/ "weapon_elite",
 	/* 9*/ "weapon_p250", /*10*/ "weapon_cz75a", /*11*/ "weapon_fiveseven", /*12*/ "weapon_tec9", /*13*/ "weapon_revolver", /*14*/ "weapon_nova", /*15*/ "weapon_xm1014", /*16*/ "weapon_mag7", /*17*/ "weapon_sawedoff",
@@ -62,7 +40,7 @@ int gKaryuu_iGloveIndices[] = {
 
 stock bool Karyuu_IsValidWeapon(int iWeapon)
 {
-	char sClassName[MAX_WEAPON_CLASSNAME_LENGTH];
+	char sClassName[Karyuu_MAX_WEAPON_CLASSNAME_LENGTH];
 	Karyuu_GetClassnameByWeapon(iWeapon, STRING(sClassName));
 	return Karyuu_StartsWith(sClassName, "weapon_");
 }
@@ -136,7 +114,7 @@ stock bool Karyuu_IsKnifeClassName(const char[] sClassName)
 
 stock bool Karyuu_IsKnifeClassNameEx(int iWeapon)
 {
-	char sClassName[MAX_WEAPON_CLASSNAME_LENGTH];
+	char sClassName[Karyuu_MAX_WEAPON_CLASSNAME_LENGTH];
 	Karyuu_GetClassnameByWeapon(iWeapon, STRING(sClassName));
 	return (Karyuu_StrContains(sClassName, "knife") && !Karyuu_StrEquals(sClassName, "weapon_knifegg")) || Karyuu_StrContains(sClassName, "bayonet");
 }
@@ -274,7 +252,7 @@ stock bool Karyuu_PlayerHasSecondary(int iClient)
 	return GetPlayerWeaponSlot(iClient, CS_SLOT_SECONDARY) != -1;
 }
 
-stock bool Karyuu_HasWeapon(int iClient, const char[] sClassName)
+stock bool Karyuu_HasWeapon(int iClient, char[] sClassName)
 {
 	return Karyuu_GetClientWeapon(iClient, sClassName) != INVALID_ENT_REFERENCE;
 }
@@ -308,9 +286,9 @@ stock int Karyuu_GetClientHealtshots(int iClient)
    return GetEntProp(iClient, Prop_Send, "m_iAmmo", _, Karyuu_HealthShotOffset);
 }
 
-stock int Karyuu_GetClientWeapon(int iClient, const char[] cSearchClassName)
+stock int Karyuu_GetClientWeapon(int iClient, char[] cSearchClassName)
 {
-	char cClassName[MAX_WEAPON_STRING];
+	char cClassName[Karyuu_MAX_WEAPON_CLASSNAME_LENGTH];
 	int	 iWeapon, iSize = GetEntPropArraySize(iClient, Prop_Send, "m_hMyWeapons");
 
 	for (int i = 0; i < iSize; i++)
@@ -358,7 +336,7 @@ stock int Karyuu_GetWeaponDefIndexByClassName(char[] sClassName)
 	return -1;
 }
 
-stock void Karyuu_RemoveWeaponPrefix(const char[] sSource, int iSize)
+stock void Karyuu_RemoveWeaponPrefix(char[] sSource, int iSize)
 {
 	Karyuu_RemoveFrontString(sSource, iSize, sSource[7]);
 }
@@ -438,14 +416,14 @@ stock void Karyuu_StripAllClientWeapons()
 	}
 }
 
-stock bool Karyuu_ChangeWeapon(int iClient, const char[] cClassName)
+stock bool Karyuu_ChangeWeapon(int iClient, char[] cClassName)
 {
 	int iWeapon = Karyuu_GetClientWeapon(iClient, cClassName);
 
 	if (iWeapon == INVALID_ENT_REFERENCE)
 		return false;
 
-	Karyuu_SetActiveWeapon(iClient, iWeapon);
+	Karyuu_SetClientActiveWeapon(iClient, iWeapon);
 	return true;
 }
 

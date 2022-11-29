@@ -48,5 +48,5 @@ stock int Karyuu_SafeGetEntPropString(int iEntity, PropType iType, const char[] 
 	if (!IsValidEdict(iEntity) || !HasEntProp(iEntity, iType, szProp))
 		return INVALID_ENT_REFERENCE;
 
-	return GetEntPropString(iEntity, iType, szProp, cBuffer, iSize);
+	return GetEntPropString(iEntity, iType, szProp, szBuffer, iSize);
 }

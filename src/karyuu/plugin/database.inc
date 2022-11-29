@@ -12,8 +12,6 @@
 #endif
 #define _KARYUU_DATABASE_INCLUDED_
 
-#define MAX_QUERY_SIZE 2048
-
 stock int Karyuu_FetchIntByFieldName(Database hDatabase, DBResultSet hResult, const char[] sFieldName)
 {
 	int iFieldNum;

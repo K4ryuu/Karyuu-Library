@@ -25,14 +25,14 @@ stock bool Karyuu_CreateFile(const char[] sBuffer)
 	char sPath[PLATFORM_MAX_PATH];
 	BuildPath(Path_SM, STRING(sPath), sBuffer);
 
-	 if (!FileExists(sPath))
-	 {
+	if (!FileExists(sPath))
+	{
 		File fFile = OpenFile(sPath, "w");
 		if (fFile == INVALID_HANDLE)
 			SetFailState("Permission problems when creating file \"%s\"", sPath);
 
 		delete fFile;
-	 }
+	}
 
 	return true;
 }

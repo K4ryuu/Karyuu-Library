@@ -12,8 +12,6 @@
 #endif
 #define _KARYUU_FUNCTONS_INCLUDED_
 
-#define MAX_MAP_NAME_LENGTH 64
-
 stock void Karyuu_SelfReload(Handle hPlugin = INVALID_HANDLE)
 {
 	char szFileName[64];

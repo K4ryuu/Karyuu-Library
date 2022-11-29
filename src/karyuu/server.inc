@@ -3,6 +3,8 @@
 #endif
 #define _KARYUU_MODULE_SERVER_INCLUDED_
 
+#include <regex>
+
 enum EngineOS
 {
 	OS_Unknown,
@@ -18,7 +20,7 @@ stock EngineOS Karyuu_GetServerOS()
 	if (Server_OS != OS_Unknown)
 		return Server_OS;
 
-	char cBuffer[512];
+	char sBuffer[512];
 	ServerCommandEx(STRING(sBuffer), "status");
 
 	Regex hRegex = CompileRegex("(os\\s+:\\s+\\w+)");
@@ -48,7 +50,7 @@ stock int Karyuu_GetClientCount(bool bAllowConnecting = false, bool bAllowBots =
 		if (!bAllowBots && IsFakeClient(iClient))
 			continue;
 
-		if (!bAllowDead && !IsClientAlive(iClient))
+		if (!bAllowDead && !IsPlayerAlive(iClient))
 			continue;
 
 		iCount++;
@@ -67,7 +69,7 @@ stock int Karyuu_GetTeamClientCount(int iTeam, bool bAllowBots = false, bool bAl
 		if (!bAllowBots && IsFakeClient(iClient))
 			continue;
 
-		if (!bAllowDead && !IsClientAlive(iClient))
+		if (!bAllowDead && !IsPlayerAlive(iClient))
 			continue;
 
 		iCount++;

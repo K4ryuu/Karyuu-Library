@@ -11,15 +11,13 @@
 
 #include <karyuu/plugin/colorpool>
 
-#define MAX_MESSAGE_LENGTH 512
-
 /* CL_Colors' properties */
-char _CL_buffer[MAX_MESSAGE_LENGTH];
+char _CL_buffer[Karyuu_MAX_MESSAGE_LENGTH];
 int  _CL_buffer_index = 0;
 int  _CL_buffer_size  = sizeof(_CL_buffer);
 
 bool _CL_proto_buff_support;
-char _CL_buffer_tag[MAX_MESSAGE_LENGTH];
+char _CL_buffer_tag[Karyuu_MAX_MESSAGE_LENGTH];
 bool _CL_skip_list[MAXPLAYERS + 1] = { false, ... };
 
 /**
@@ -544,12 +542,12 @@ stock void CRemoveAllColors(char[] message, int maxlength)
  */
 stock void CEscapeTags(char[] message, int maxlength)
 {
-	strcopy(_CL_buffer[_CL_buffer_index], _CL_buffer_size, message);
+    strcopy(_CL_buffer[_CL_buffer_index], _CL_buffer_size, message);
 
-	int i     = _CL_buffer_index;
-	int index = 0;
-	for (; index < maxlength; ++i)
-	{
+    int i     = _CL_buffer_index;
+    int index = 0;
+    for (; index < maxlength; ++i)
+    {
         switch (_CL_buffer[i])
         {
             case 0x00:
@@ -558,9 +556,9 @@ stock void CEscapeTags(char[] message, int maxlength)
             case '{':
             {
                 message[index] = '\\';
-			    ++index;
-			    message[index] = '{';
-			    ++index;
+                ++index;
+                message[index] = '{';
+                ++index;
             }
             case '\\':
             {
@@ -582,12 +580,12 @@ stock void CEscapeTags(char[] message, int maxlength)
             default:
             {
                 message[index] = _CL_buffer[i];
-			    ++index;
+                ++index;
             }
         }
-	}
+    }
 
-	message[index] = 0x00;
+    message[index] = 0x00;
 }
 
 /**
@@ -661,12 +659,12 @@ stock void CFormat(char[] message, int maxlength)
  * @param client    Client index
  * @return          No return
  */
-stock void CSkipNextClient(int client)
+stock void CSkipNextClient(int iClient)
 {
-    if (!(0 < iIndex <= MaxClients))
-        ThrowError("Invalid client index %d", client);
+    if (!(0 < iClient <= MaxClients))
+        ThrowError("Invalid client index %d", iClient);
 
-    _CL_skip_list[client] = true;
+    _CL_skip_list[iClient] = true;
 }
 
 /**

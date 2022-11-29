@@ -20,16 +20,3 @@ stock void Karyuu_PlayToRadius(float origin[3], float radius, char[] sound)
 		}
 	}
 }
-
-stock bool Karyuu_CheckAudio(int iClient)
-{
-	if (!Karyuu_IsValidPlayer(iClient))
-		return false;
-
-	return QueryClientConVar(iClient, "voice_inputfromfile", Karyuu_Query_CheckAudio);
-}
-
-stock bool Karyuu_Query_CheckAudio(QueryCookie cCookie, int iClient, ConVarQueryResult rResult, const char[] sName, const char[] sValue)
-{
-	return rResult == ConVarQuery_Okay && StringToInt(sValue) == 1;
-}

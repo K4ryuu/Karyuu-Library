@@ -30,27 +30,37 @@ stock int Karyuu_GetTeamIndex(int iTeam)
 
 stock void Karyuu_SetTeamName(int iTeam, const char[] cValue)
 {
-	Karyuu_SetConVarStringSafe(Karyuu_StringBuilder("mp_teamname_%d", Karyuu_GetTeamIndex(iTeam)), cValue);
+	char sBuffer[64];
+	FormatEx(STRING(sBuffer), "mp_teamname_%d", Karyuu_GetTeamIndex(iTeam));
+	Karyuu_SetConVarStringSafe(sBuffer, cValue);
 }
 
 stock void Karyuu_SetTeamLogo(int iTeam, const char[] cValue)
 {
-	Karyuu_SetConVarStringSafe(Karyuu_StringBuilder("mp_teamlogo_%d", Karyuu_GetTeamIndex(iTeam)), cValue);
+	char sBuffer[64];
+	FormatEx(STRING(sBuffer), "mp_teamlogo_%d", Karyuu_GetTeamIndex(iTeam));
+	Karyuu_SetConVarStringSafe(sBuffer, cValue);
 }
 
 stock void Karyuu_SetTeamFlag(int iTeam, const char[] cValue)
 {
-	Karyuu_SetConVarStringSafe(Karyuu_StringBuilder("mp_teamflag_%d", Karyuu_GetTeamIndex(iTeam)), cValue);
+	char sBuffer[64];
+	FormatEx(STRING(sBuffer), "mp_teamlogo_%d", Karyuu_GetTeamIndex(iTeam));
+	Karyuu_SetConVarStringSafe(sBuffer, cValue);
 }
 
 stock void Karyuu_SetTeamScore(int iTeam, int iValue)
 {
-	Karyuu_SetConVarIntSafe(Karyuu_StringBuilder("mp_teamscore_%d", Karyuu_GetTeamIndex(iTeam)), iValue);
+	char sBuffer[64];
+	FormatEx(STRING(sBuffer), "mp_teamscore_%d", Karyuu_GetTeamIndex(iTeam));
+	Karyuu_SetConVarIntSafe(sBuffer, iValue);
 }
 
 stock void Karyuu_SetTeamText(int iTeam, const char[] cValue)
 {
-	Karyuu_SetConVarStringSafe(Karyuu_StringBuilder("mp_teammatchstat_%d", Karyuu_GetTeamIndex(iTeam)), cValue);
+	char sBuffer[64];
+	FormatEx(STRING(sBuffer), "mp_teammatchstat_%d", Karyuu_GetTeamIndex(iTeam));
+	Karyuu_SetConVarStringSafe(sBuffer, cValue);
 }
 
 stock void Karyuu_SetTeamData(int iTeam, const char[] cName, const char[] cFlag = "", const char[] cLogo = "", const char[] cText = "", int iScore = 0)

@@ -5,7 +5,7 @@
 
 stock bool Karyuu_ShouldHappen(float fChance)
 {
-	return GetRandomInt(1, 100) <= chance;
+	return GetRandomInt(1, 100) <= fChance;
 }
 
 stock bool Karyuu_RandomBool()

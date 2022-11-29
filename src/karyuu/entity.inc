@@ -3,11 +3,9 @@
 #endif
 #define _KARYUU_MODULE_ENTITY_INCLUDED_
 
-#define MAX_ENTITY_LIMIT 4096 + 1
-
 stock bool Karyuu_IsValidEntity(int iEntity)
 {
-	if (!iEntity || iEntity < MaxClients || iEntity > MAX_ENTITY_LIMIT)
+	if (!iEntity || iEntity < MaxClients || iEntity > Karyuu_MAX_ENTITY_LIMIT)
 		return false;
 
 	return IsValidEntity(iEntity);
@@ -43,7 +41,7 @@ stock bool Karyuu_SetClassName(int iEntity, const char[] cClassName)
 	return DispatchKeyValue(iEntity, "classname", cClassName);
 }
 
-stock bool Karyuu_ClassNameMatches(int iEntity, const char[] cClassName, bool bPartialMatch = false)
+stock bool Karyuu_ClassNameMatches(int iEntity, char[] cClassName, bool bPartialMatch = false)
 {
 	char cEntityClassName[64];
 	Karyuu_GetClassName(iEntity, STRING(cEntityClassName));
@@ -73,7 +71,6 @@ stock int Karyuu_GetClosestToEntity(int iEntity, bool bOnlyClients = false)
 stock int Karyuu_GetClosest(float fOriginVec[3], bool bOnlyClients = false)
 {
 	float fTempVec[3], fSmallestDistance = 0.0, fTempDistance;
-	float;
 	int iClosest	 = INVALID_ENT_REFERENCE;
 
 	int iMaxEntities = bOnlyClients ? MaxClients : GetMaxEntities();

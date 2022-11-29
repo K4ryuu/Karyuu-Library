@@ -5,18 +5,11 @@
 
 stock bool Karyuu_ClearClientMenu(int iClient)
 {
-	if (!Karyuu_IsClientIndex(iClient) || IsFakeClient(iClient) || !IsClientInGame(iClient))
+	if (!IsClientConnected(iClient) || IsFakeClient(iClient))
 		return false;
 
-	CancelClientMenu(iClient);
-
-	Panel panel = new Panel();
-	panel.Send(iClient, __Karyuu_Panel_Void, 1);
-	delete panel;
-
-	return true;
+	return CancelClientMenu(iClient);
 }
-public int __Karyuu_Panel_Void(Menu menu, MenuAction action, int param1, int param2) { delete menu; }
 
 stock void Karyuu_Menu_SetTitle(Menu menu, const char[] myString, any...)
 {
@@ -36,7 +29,7 @@ stock void Karyuu_Menu_AddItem(Menu menu, int ItemDraw = ITEMDRAW_DEFAULT, char[
 	menu.AddItem(id, myFormattedString, ItemDraw);
 }
 
-stock char Karyuu_Menu_GetSelect(Menu menu, int iParam)
+stock char[] Karyuu_Menu_GetSelect(Menu menu, int iParam)
 {
 	char cBuffer[32];
 	GetMenuItem(menu, iParam, STRING(cBuffer));

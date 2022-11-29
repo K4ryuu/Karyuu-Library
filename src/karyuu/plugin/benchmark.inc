@@ -5,45 +5,6 @@
 
 #include <profiler>
 
-static bool bBenchmarkState;
-
-stock void	Karyuu_ToggleProfiling()
-{
-	char sTime[32];
-
-	if (!start)
-	{
-		delete g_hTimer;
-
-		FormatTime(sTime, sizeof(sTime), "%F_%H-%M-%S", GetTime());
-		FormatEx(g_PathProfilerLog, sizeof(g_PathProfilerLog), "%s_%s.log", g_PathPrefix, sTime);
-
-		if (g_bL4D2)
-		{
-			g_ptrFile = FileSize(g_PathCosole);
-		}
-		else {
-			SetCvarSilent(g_CVarLogFile, g_PathProfilerLog);
-		}
-
-		ReplyToCommand(client, "\x04[START]\x05 Profiler is started...");
-		ServerCommand("vprof_on");
-		ServerExecute();
-		RequestFrame(OnFrameDelay);
-	}
-	else
-	{
-		ServerCommand("sm prof stop vprof");
-		ServerCommand("sm prof dump vprof");
-		ServerCommand("vprof_off");
-		ReplyToCommand(client, "\x04[STOP]\x05 Saving profiler log to: %s", g_PathProfilerLog);
-
-		// Profiler needs some time for analysis
-		g_hTimer = CreateTimer(60.0, Timer_RestoreCvar);
-	}
-	bBenchmarkState = !bBenchmarkState;
-}
-
 stock void OnFrameDelay()
 {
 	ServerCommand("sm prof start vprof");
@@ -55,12 +16,6 @@ stock void SetCvarSilent(ConVar cvar, char[] value)
 	cvar.Flags &= ~FCVAR_NOTIFY;
 	cvar.SetString(value);
 	cvar.Flags = flags;
-}
-
-stock Action Timer_RestoreCvar(Handle timer)
-{
-	SetCvarSilent(g_CVarLogFile, g_PathOrig);
-	g_hTimer = null;
 }
 
 stock void Karyuu_Benchmark(Function func, const char[] name, int iterations)

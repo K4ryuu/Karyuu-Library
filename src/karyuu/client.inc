@@ -3,12 +3,6 @@
 #endif
 #define _KARYUU_MODULE_CLIENT_INCLUDED_
 
-#define MAX_AUTH_LENGTH			  21
-#define MAX_IP_LENGTH 				23
-
-#define KARYUU_LOOP_CLIENTS(%1) for (int %1 = 1; %1 <= MaxClients; %1++) if (IsClientInGame(%1))
-#define KARYUU_LOOP_PLAYERS(%1) for (int %1 = 1; %1 <= MaxClients; %1++) if (IsClientInGame(%1) && !IsFakeClient(%1))
-
 enum WaterLevel
 {
 	WL_NotInWater = 0,
@@ -62,12 +56,12 @@ stock bool Karyuu_IsClientInVehicle(int iClient)
 
 stock bool Karyuu_IsClientCrouching(int iClient)
 {
-	return GetEntityFlags(iClient) & FL_DUCKING;
+	return view_as<bool>(GetEntityFlags(iClient) & FL_DUCKING);
 }
 
 stock bool Karyuu_IsClientOnGround(int iClient)
 {
-	return GetEntityFlags(iClient) & FL_ONGROUND;
+	return view_as<bool>(GetEntityFlags(iClient) & FL_ONGROUND);
 }
 
 stock bool Karyuu_IsClientOnLadder(int iClient)
@@ -351,11 +345,11 @@ stock void Karyuu_SetThirdPerson(int iClient)
 		SetEntPropEnt(iClient, Prop_Send, "m_hObserverTarget", 0);
 		SetEntProp(iClient, Prop_Send, "m_iObserverMode", 1);
 		SetEntProp(iClient, Prop_Send, "m_bDrawViewmodel", 0);
-		SetEntProp(clieiClientnt, Prop_Send, "m_iFOV", 120);
+		SetEntProp(iClient, Prop_Send, "m_iFOV", 120);
 	}
 }
 
-stock void Karyuu_SetFirstPerson(int client)
+stock void Karyuu_SetFirstPerson(int iClient)
 {
 	if (Karyuu_IsValidClient(iClient))
 	{
@@ -378,10 +372,11 @@ stock void Karyuu_ToggleThirdPerson(int iClient)
 
 stock void Karyuu_RadarVisibilityToggle(int iClient, bool bStatus)
 {
-	static int iOffset = FindSendPropInfo("CBaseEntity", "m_bSpotted");
+	int iOffset = FindSendPropInfo("CBaseEntity", "m_bSpotted");
+
 	if (iOffset > 0)
 	{
-		static Address g_aCanBeSpotted = view_as<Address>(iOffset - 4);
+		Address g_aCanBeSpotted = view_as<Address>(iOffset - 4);
 
 		if (bStatus)
 		{
@@ -398,8 +393,8 @@ stock void Karyuu_RadarVisibilityToggle(int iClient, bool bStatus)
 
 stock int Karyuu_FindBySteamId(const char[] szAuth, AuthIdType iType)
 {
-	int	 iMax = GetMaxClients();
-	char szTempAuth[MAX_AUTH_LENGTH];
+	int	 iMax = MaxClients;
+	char szTempAuth[Karyuu_MAX_AUTH_LENGTH];
 
 	for (int iClient = 0; iClient < iMax; iClient++)
 	{
@@ -445,7 +440,7 @@ stock bool Karyuu_GetClientCrosshairOrigin(int iClient, float fOrigin[3], bool b
 
 stock bool Karyuu_TraceEntityFilterPlayer(int iEntity, int iMask, any aData)
 {
-	return iEntity > GetMaxClients() || !iEntity;
+	return iEntity > MaxClients || !iEntity;
 }
 
 stock bool Karyuu_TraceEntityFilterNone(int iEntity, int iMask, any aData)
@@ -484,7 +479,7 @@ stock int Karyuu_GetObserverTarget(int iClient)
 	return GetEntPropEnt(iClient, Prop_Send, "m_hObserverTarget");
 }
 
-stock int Karyuu_SetObserverTarget(int iClient, int iEntity)
+stock void Karyuu_SetObserverTarget(int iClient, int iEntity)
 {
 	SetEntPropEnt(iClient, Prop_Send, "m_hObserverTarget", iEntity);
 }
@@ -494,7 +489,7 @@ stock int Karyuu_GetFOV(int iClient)
 	return GetEntProp(iClient, Prop_Send, "m_iFOV");
 }
 
-stock int Karyuu_SetFOV(int iClient, int iValue)
+stock void Karyuu_SetFOV(int iClient, int iValue)
 {
 	SetEntProp(iClient, Prop_Send, "m_iFOV", iValue);
 }
@@ -504,14 +499,14 @@ stock bool Karyuu_IsInThirdPerson(int iClient)
 	return view_as<bool>(GetEntProp(iClient, Prop_Data, "m_iObserverMode"));
 }
 
-stock void Karyuu_LastLocation(int iClient, const char[] sBuffer, int iLength)
+stock void Karyuu_LastLocation(int iClient, char[] sBuffer, int iLength)
 {
 	GetEntPropString(iClient, Prop_Send, "m_szLastPlaceName", sBuffer, iLength);
 }
 
 stock int Karyuu_GetScore(int iClient)
 {
-	return GetClientFrags(client);
+	return GetClientFrags(iClient);
 }
 
 stock void Karyuu_SetScore(int iClient, int iValue)

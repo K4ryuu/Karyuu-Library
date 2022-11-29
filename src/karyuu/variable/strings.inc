@@ -3,8 +3,6 @@
 #endif
 #define _KARYUU_MODULE_STRING_INCLUDED_
 
-#define STRING(%1) %1, sizeof(%1)
-
 stock bool Karyuu_IsStringEmpty(const char[] sBuffer)
 {
 	return !sBuffer[0] || strlen(sBuffer) == 0;
@@ -70,18 +68,9 @@ stock int Karyuu_FlagStringToInt(char[] buffer)
 	return FindFlagByChar(buffer[0], aFlag) ? FlagToBit(aFlag) : INVALID_ENT_REFERENCE;
 }
 
-stock char[] Karyuu_StringBuilder(const char[] cFormat, any...)
-{
-	int iLength			= strlen(cFormat) + 255;
-	char[] cBuiltString = new char[iLength];
-
-	VFormat(cBuiltString, iLength, cFormat, 2);
-	return cBuiltString;
-}
-
 stock char[] Karyuu_IntDotBuilder(int iValue)
 {
-	char cValue[MAX_INTEGER_LENGTH + 1];
+	char cValue[Karyuu_MAX_INTEGER_LENGTH + 1];
 	FormatEx(STRING(cValue), "%d", iValue);
 
 	char cBuffer[32];
@@ -122,9 +111,9 @@ stock int Karyuu_FlagIntToString(int iFlag)
 	return (BitToFlag(iFlag, aFlag) && FindFlagChar(aFlag, iChar)) ? iChar : INVALID_ENT_REFERENCE;
 }
 
-stock char Karyuu_IntToString(int iInt)
+stock char[] Karyuu_IntToString(int iInt)
 {
-	char cBuffer[MAX_INTEGER_LENGTH + 1];
+	char cBuffer[Karyuu_MAX_INTEGER_LENGTH + 1];
 	FormatEx(STRING(cBuffer), "%d", iInt);
 	return cBuffer;
 }
@@ -224,27 +213,6 @@ stock bool Karyuu_EndsWith(const char[] cBuffer, const char[] cSubString)
 	}
 
 	return true;
-}
-
-/*
- * Count the characters in a string
- *
- * @param str           String to check
- * @return              Count of characters in the string
- */
-stock int Karyuu_CharCount(const char[] str)
-{
-	int iCount, len = strlen(str);
-
-	for (int i, b; i < len; i++)
-	{
-		if (b = IsCharMB(str[i]))
-			i += (b - 1);
-
-		iCount++;
-	}
-
-	return iCount;
 }
 
 stock int Karyuu_CountChar(int character, const char[] string)
