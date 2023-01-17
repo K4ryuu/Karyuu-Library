@@ -5,7 +5,8 @@
 
 #define STRING(%1) %1, sizeof(%1)
 
-#define Karyuu_MAX(% 0, % 1)	   (((% 0) > (% 1)) ? (% 0) : (% 1))
+#define Karyuu_MAX(%0, %1)	   ((%0) > (%1) ? %0 : %1)
+#define Karyuu_MIN(%0, %1)	   ((%0) > (%1) ? %1 : %0)
 
 #define Karyuu_MAX_INTEGER_VALUE  		2147483647
 #define Karyuu_MAX_INTEGER_LENGTH 		16
@@ -43,4 +44,4 @@
 #define Karyuu_DecoyGrenadeOffset        	18
 #define Karyuu_HealthShotOffset 				21
 
-#define Karyuu_MAX_ENTITY_LIMIT 4097
+#define Karyuu_MAX_ENTITY_LIMIT 				4097

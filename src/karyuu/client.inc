@@ -81,14 +81,13 @@ stock bool Karyuu_IsClientTimingOut(int iClient, bool bCheck = true)
 
 stock bool Karyuu_IsLookingAtWall(int iClient, float fDistance = 40.0)
 {
-
 	float fEye[3], fEyeAngle[3];
-	bool isClientLookingAtWall = false;
+	bool	isClientLookingAtWall = false;
 
 	GetClientEyePosition(iClient, fEye);
 	GetClientEyeAngles(iClient, fEyeAngle);
 
-	fEyeAngle[0] = 0.0;
+	fEyeAngle[0]  = 0.0;
 
 	Handle hTrace = TR_TraceRayFilterEx(fEye, fEyeAngle, CONTENTS_SOLID, RayType_Infinite, Karyuu_LookingWall_TraceEntityFilter);
 
@@ -122,10 +121,10 @@ stock TeamType Karyuu_GetClientTeamType(int iClient, int iTeam)
 {
 	switch (GetClientTeam(iClient))
 	{
-		case CS_TEAM_NONE:			return TeamType_Unassigned;
-		case CS_TEAM_T, CS_TEAM_CT:	return TeamType_Active;
-		case CS_TEAM_SPECTATOR:		return TeamType_Spectator;
-		default:					return TeamType_Unknown;
+		case CS_TEAM_NONE: return TeamType_Unassigned;
+		case CS_TEAM_T, CS_TEAM_CT: return TeamType_Active;
+		case CS_TEAM_SPECTATOR: return TeamType_Spectator;
+		default: return TeamType_Unknown;
 	}
 }
 
@@ -240,7 +239,7 @@ stock int Karyuu_GetClientDeaths(int iClient)
 
 stock int Karyuu_GetClientMoney(int iClient)
 {
-   return GetEntProp(iClient, Prop_Send, "m_iAccount");
+	return GetEntProp(iClient, Prop_Send, "m_iAccount");
 }
 
 stock void Karyuu_SetClientMoney(int iClient, int iValue)
@@ -393,7 +392,7 @@ stock void Karyuu_RadarVisibilityToggle(int iClient, bool bStatus)
 
 stock int Karyuu_FindBySteamId(const char[] szAuth, AuthIdType iType)
 {
-	int	 iMax = MaxClients;
+	int  iMax = MaxClients;
 	char szTempAuth[Karyuu_MAX_AUTH_LENGTH];
 
 	for (int iClient = 0; iClient < iMax; iClient++)
@@ -418,8 +417,8 @@ stock bool Karyuu_GetClientCrosshairOrigin(int iClient, float fOrigin[3], bool b
 	float vAngles[3];
 	GetClientEyeAngles(iClient, vAngles);
 
-	Handle hTrace = TR_TraceRayFilterEx(vOrigin, vAngles, MASK_SHOT, RayType_Infinite, bFilterPlayers ? Karyuu_TraceEntityFilterPlayer : Karyuu_TraceEntityFilterNone, iClient);
-	bool bReturn = TR_DidHit(hTrace);
+	Handle hTrace	= TR_TraceRayFilterEx(vOrigin, vAngles, MASK_SHOT, RayType_Infinite, bFilterPlayers ? Karyuu_TraceEntityFilterPlayer : Karyuu_TraceEntityFilterNone, iClient);
+	bool	 bReturn = TR_DidHit(hTrace);
 
 	if (bReturn)
 	{

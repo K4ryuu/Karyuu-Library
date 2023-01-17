@@ -5,46 +5,102 @@
 
 #include <profiler>
 
-stock void OnFrameDelay()
+bool g_bIsStarted;
+int g_iRepeats;
+ArrayList g_hFunctionsNames;
+ArrayList g_hTestsTotalResult;
+
+stock void Karyuu_Benchmark_Initialize(int iRepeat = 100)
 {
-	ServerCommand("sm prof start vprof");
+	if(g_bIsStarted)
+		ThrowError("Benchmark session is running!");
+
+	g_iRepeats = iRepeat;
+	g_bIsStarted = true;
+	g_hFunctionsNames = new ArrayList(256);
+	g_hTestsTotalResult = new ArrayList();
+
+	PrintToServer(" ");
+	PrintToServer("[ToolKitsune] A benchmark session has started.");
 }
 
-stock void SetCvarSilent(ConVar cvar, char[] value)
+stock void Karyuu_Benchmark_TestFunction(Function testFunction, char[] sFunctionName)
 {
-	int flags = cvar.Flags;
-	cvar.Flags &= ~FCVAR_NOTIFY;
-	cvar.SetString(value);
-	cvar.Flags = flags;
-}
+	if(!g_bIsStarted)
+		ThrowError("Benchmark session is not running!");
 
-stock void Karyuu_Benchmark(Function func, const char[] name, int iterations)
-{
-	Profiler profile = new Profiler();
-	float	 sum, sum2, diff, min, max, avg, stddev;
+	if(testFunction == INVALID_FUNCTION)
+		ThrowError("Invalid function! '%s'", sFunctionName);
 
-	for (int i = 0; i < iterations; i++)
+	if(g_hFunctionsNames.FindString(sFunctionName) != -1)
+		ThrowError("Function already registered! '%s'", sFunctionName);
+
+	g_hFunctionsNames.PushString(sFunctionName);
+
+	PrintToServer("[ToolKitsune] Benchmarking function: %s", sFunctionName);
+
+	Profiler prof = new Profiler();
+
+	prof.Start();
+
+	for(int num; num < g_iRepeats; num++)
 	{
-		profile.Start();
-		Call_StartFunction(INVALID_HANDLE, func);
+		Call_StartFunction(INVALID_HANDLE, testFunction);
 		Call_Finish();
-		profile.Stop();
-
-		diff = profile.Time;
-
-		sum += diff;
-		sum2 += diff * diff;
-
-		if (i == 0 || diff < min)
-			min = diff;
-
-		if (i == 0 || diff > max)
-			max = diff;
 	}
 
-	avg	   = sum / float(iterations);
-	stddev = SquareRoot(sum2 / float(iterations) - avg * avg);
+	prof.Stop();
 
-	LogMessage("%s executed %d times | Results - Fastest: %f, Slowest: %f, Avarage: %f, Standard deviation: %f", name, iterations, min, max, avg, stddev);
-	delete profile;
+	g_hTestsTotalResult.Push(prof.Time);
+
+	delete prof;
+}
+
+stock void Karyuu_Benchmark_Results()
+{
+	if(!g_bIsStarted)
+		ThrowError("Benchmark session is not running!");
+
+	char buffer[23];
+	float best_time = 1.0, lost_time, time;
+	int best_place, lost_place;
+
+	for(int id; id < g_hFunctionsNames.Length; id++)
+	{
+		time = g_hTestsTotalResult.Get(id);
+
+		if(time < best_time)
+		{
+			best_time = time;
+			best_place = id;
+		}
+
+		if(time > lost_time)
+		{
+			lost_time = time;
+			lost_place = id;
+		}
+	}
+
+	PrintToServer(" ");
+	PrintToServer("[ToolKitsune] Result with %i tests:", g_iRepeats);
+	PrintToServer("[ToolKitsune]         Function name       | Total, sec |   Avg, ms   |  Speed   | Performance");
+
+	for(int id; id < g_hFunctionsNames.Length; id++)
+	{
+		g_hFunctionsNames.GetString(id, buffer, sizeof(buffer));
+
+		if(buffer[0] == '_')
+			Format(buffer, sizeof(buffer), buffer[1]);
+
+		time = g_hTestsTotalResult.Get(id);
+		PrintToServer("[ToolKitsune] %28s|  %.6f  | %.9f | x%.4f | %.1f%% %s", buffer, time, (time * 1000 / g_iRepeats), (lost_time / time), (best_time/ time * 100.0),
+		id == best_place ? "<<== Fastest" : (id == lost_place ? "<<== Slowest" : ""));
+	}
+
+	delete g_hFunctionsNames;
+	delete g_hTestsTotalResult;
+	g_bIsStarted = false;
+
+	PrintToServer(" ");
 }

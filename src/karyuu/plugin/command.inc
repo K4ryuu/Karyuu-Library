@@ -26,13 +26,13 @@ stock void Karyuu_RegCommand(char[] cCommand, ConCmd ccCallBack, char[] cDescrip
 		RegAdminCmd(cCommand, ccCallBack, iFlag, cDescription);
 }
 
-stock int Karyuu_RegMultipleCommand(char[] cCommand, ConCmd ccCallBack, char[] cDescription = "", int iFlag = 0)
+stock int Karyuu_RegMultipleCommand(char[] cCommand, ConCmd ccCallBack, char[] cDescription = "", int iFlag = -1)
 {
 	int iRegistered = 0;
 	if (Karyuu_StrContains(cCommand, ";"))
 	{
 		char gShadow_AliasList[32][32];
-		int	 iAliasCount = ExplodeString(cCommand, ";", STRING(gShadow_AliasList), sizeof(gShadow_AliasList[]));
+		int  iAliasCount = ExplodeString(cCommand, ";", STRING(gShadow_AliasList), sizeof(gShadow_AliasList[]));
 		for (int i = 0; i < iAliasCount; i++)
 		{
 			Karyuu_RegCommand(gShadow_AliasList[i], ccCallBack, cDescription, iFlag);
@@ -46,6 +46,13 @@ stock int Karyuu_RegMultipleCommand(char[] cCommand, ConCmd ccCallBack, char[] c
 	}
 
 	return iRegistered;
+}
+
+stock int Karyuu_RegCommandsFromConVar(ConVar hConVar, ConCmd ccCallBack, char[] cDescription = "", int iFlag = -1)
+{
+	char sBuffer[2048];
+	hConVar.GetString(STRING(sBuffer));
+	return Karyuu_RegMultipleCommand(sBuffer, ccCallBack, cDescription, iFlag);
 }
 
 stock bool Karyuu_RegCommandEx(char[] cCommand, ConCmd ccCallBack, char[] cDescription = "", int iFlag = 0)
