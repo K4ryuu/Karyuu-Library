@@ -542,3 +542,11 @@ stock int Karyuu_GetLoss(int iClient)
 {
 	return RoundFloat(GetClientAvgLoss(iClient, NetFlow_Both));
 }
+
+stock bool Karyuu_ClearClientMenu(int iClient)
+{
+	if (!IsClientConnected(iClient) || IsFakeClient(iClient))
+		return false;
+
+	return CancelClientMenu(iClient);
+}
