@@ -24,18 +24,18 @@
  | 																			  						|
  *============================================================================*/
 #if !defined _cstrike_included
-	#define CS_TEAM_NONE        0   /* No team yet */
-	#define CS_TEAM_SPECTATOR   1   /* Spectators */
-	#define CS_TEAM_T           2   /* Terrorists */
-	#define CS_TEAM_CT          3   /* Counter-Terrorists */
+	#define CS_TEAM_NONE		  0 /* No team yet */
+	#define CS_TEAM_SPECTATOR 1 /* Spectators */
+	#define CS_TEAM_T			  2 /* Terrorists */
+	#define CS_TEAM_CT		  3 /* Counter-Terrorists */
 
-	#define CS_SLOT_PRIMARY     0   /* Primary weapon slot */
-	#define CS_SLOT_SECONDARY   1   /* Secondary weapon slot */
-	#define CS_SLOT_KNIFE       2   /* Knife slot */
-	#define CS_SLOT_GRENADE     3   /* Grenade slot (will only return one grenade) */
-	#define CS_SLOT_C4          4   /* C4 slot */
-	#define CS_SLOT_BOOST       11  /* Slot for healthshot and shield (will only return one weapon/item) */
-	#define CS_SLOT_UTILITY     12  /* Slot for tablet */
+	#define CS_SLOT_PRIMARY	  0  /* Primary weapon slot */
+	#define CS_SLOT_SECONDARY 1  /* Secondary weapon slot */
+	#define CS_SLOT_KNIFE	  2  /* Knife slot */
+	#define CS_SLOT_GRENADE	  3  /* Grenade slot (will only return one grenade) */
+	#define CS_SLOT_C4		  4  /* C4 slot */
+	#define CS_SLOT_BOOST	  11 /* Slot for healthshot and shield (will only return one weapon/item) */
+	#define CS_SLOT_UTILITY	  12 /* Slot for tablet */
 #endif
 
 #include <karyuu/defines>
@@ -58,7 +58,6 @@
 #include <karyuu/entity>
 #include <karyuu/client>
 #include <karyuu/weapon>
-#include <karyuu/menu>
 #include <karyuu/sound>
 
 #include <karyuu/plugin/benchmark>
@@ -69,5 +68,8 @@
 #include <karyuu/plugin/function>
 #include <karyuu/plugin/chatprocessor>
 #include <karyuu/plugin/cookie>
+
+#include <karyuu/variable/panel>
+#include <karyuu/variable/menu>
 
 #include <karyuu/plugin/benchmark>
