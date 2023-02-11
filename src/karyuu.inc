@@ -69,7 +69,8 @@
 #include <karyuu/plugin/chatprocessor>
 #include <karyuu/plugin/cookie>
 
-#include <karyuu/variable/panel>
-#include <karyuu/variable/menu>
+//#include <karyuu/variable/panel>
+//#include <karyuu/variable/menu>
+#include <karyuu/menu>
 
 #include <karyuu/plugin/benchmark>
