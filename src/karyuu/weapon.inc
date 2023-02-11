@@ -283,13 +283,13 @@ stock int Karyuu_GetClientGrenades(int iClient)
 
 stock int Karyuu_GetClientHealtshots(int iClient)
 {
-   return GetEntProp(iClient, Prop_Send, "m_iAmmo", _, Karyuu_HealthShotOffset);
+	return GetEntProp(iClient, Prop_Send, "m_iAmmo", _, Karyuu_HealthShotOffset);
 }
 
 stock int Karyuu_GetClientWeapon(int iClient, char[] cSearchClassName)
 {
 	char cClassName[Karyuu_MAX_WEAPON_CLASSNAME_LENGTH];
-	int	 iWeapon, iSize = GetEntPropArraySize(iClient, Prop_Send, "m_hMyWeapons");
+	int  iWeapon, iSize = GetEntPropArraySize(iClient, Prop_Send, "m_hMyWeapons");
 
 	for (int i = 0; i < iSize; i++)
 	{
@@ -441,7 +441,7 @@ stock bool Karyuu_DropWeapon(int iClient, int iWeapon)
 	if (Karyuu_GetWeaponDefIndex(iWeapon) == -1)
 		return false;
 
-	int iHudFlags	 = GetEntProp(iClient, Prop_Send, "m_iHideHUD");
+	int iHudFlags	  = GetEntProp(iClient, Prop_Send, "m_iHideHUD");
 	int iOwnerEntity = GetEntPropEnt(iWeapon, Prop_Send, "m_hOwnerEntity");
 
 	if (iOwnerEntity != iClient)
