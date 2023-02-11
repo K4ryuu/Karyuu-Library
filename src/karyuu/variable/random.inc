@@ -22,3 +22,16 @@ stock float Karyuu_RandomFloat(float iMin, float iMax)
 {
 	return GetURandomFloat() * (iMax - iMin) + iMin;
 }
+
+stock int Karyuu_GetRandomClient()
+{
+	int iClientList[MAXPLAYERS + 1], iClientCount;
+
+	for (int iClient = 1; iClient <= MaxClients; iClient++)
+	{
+		if (IsClientInGame(iClient))
+			iClientList[iClientCount++] = iClient;
+	}
+
+	return iClientCount == 0 ? -1 : iClientList[Karyuu_RandomInt(0, iClientCount - 1)];
+}
