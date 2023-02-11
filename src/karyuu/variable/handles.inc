@@ -47,12 +47,12 @@ stock void Karyuu_DeleteStack(ArrayStack &asArrayStack)
 
 stock void Karyuu_ClearTrieSafe(StringMap &smStringMap)
 {
-	int iSize;
+	int					iSize;
 	StringMapSnapshot smSnapshot = smStringMap.Snapshot();
 
 	for (int iData = 0; iData < smSnapshot.Length; iData++)
 	{
-		iSize = smSnapshot.KeyBufferSize(iData);
+		iSize				= smSnapshot.KeyBufferSize(iData);
 
 		char[] sBuffer = new char[iSize];
 		smSnapshot.GetKey(iData, sBuffer, iSize);
@@ -75,6 +75,5 @@ stock bool Karyuu_KillTimerSafe(Handle &hTimer)
 		return false;
 
 	KillTimer(hTimer);
-	hTimer = null;
 	return true;
 }
