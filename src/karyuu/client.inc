@@ -392,12 +392,11 @@ stock void Karyuu_RadarVisibilityToggle(int iClient, bool bStatus)
 
 stock int Karyuu_FindBySteamId(const char[] szAuth, AuthIdType iType)
 {
-	int  iMax = MaxClients;
 	char szTempAuth[Karyuu_MAX_AUTH_LENGTH];
 
-	for (int iClient = 0; iClient < iMax; iClient++)
+	for (int iClient = 1; iClient < MaxClients; iClient++)
 	{
-		if (!Karyuu_IsValidClient(iClient) || !IsClientAuthorized(iClient))
+		if (!IsClientInGame(iClient) || !IsClientAuthorized(iClient))
 			continue;
 
 		if (GetClientAuthId(iClient, iType, STRING(szTempAuth)) && Karyuu_StrEquals(szAuth, szTempAuth))
