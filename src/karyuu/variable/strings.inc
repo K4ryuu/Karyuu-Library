@@ -74,7 +74,7 @@ stock char[] Karyuu_IntDotBuilder(int iValue)
 	FormatEx(STRING(cValue), "%d", iValue);
 
 	char cBuffer[32];
-	int iLength = strlen(cValue);
+	int  iLength = strlen(cValue);
 
 	if (iLength <= 3)
 	{
@@ -107,7 +107,7 @@ stock char[] Karyuu_IntDotBuilder(int iValue)
 stock int Karyuu_FlagIntToString(int iFlag)
 {
 	AdminFlag aFlag;
-	int		  iChar;
+	int		 iChar;
 	return (BitToFlag(iFlag, aFlag) && FindFlagChar(aFlag, iChar)) ? iChar : INVALID_ENT_REFERENCE;
 }
 
@@ -200,10 +200,10 @@ stock bool Karyuu_StartsWith(const char[] cBuffer, const char[] cSubString)
 
 stock bool Karyuu_EndsWith(const char[] cBuffer, const char[] cSubString)
 {
-	int n_str = strlen(cBuffer) - 1;
+	int n_str		 = strlen(cBuffer) - 1;
 	int n_subString = strlen(cSubString) - 1;
 
-	if(n_str < n_subString)
+	if (n_str < n_subString)
 		return false;
 
 	while (n_str != 0 && n_subString != 0)
@@ -252,22 +252,30 @@ stock void Karyuu_ShuffleString(char[] sBuffer, int iSize)
 stock void Karyuu_GenerateUUID(char[] sBuffer, int iLength)
 {
 	FormatEx(sBuffer, iLength, "%04x%04x-%04x-%04x-%04x-%04x%04x%04x",
-		// 32 bits for "time_low"
-		GetRandomInt(0, 0xffff), GetRandomInt(0, 0xffff),
+				// 32 bits for "time_low"
+				GetRandomInt(0, 0xffff), GetRandomInt(0, 0xffff),
 
-		// 16 bits for "time_mid"
-		GetRandomInt(0, 0xffff),
+				// 16 bits for "time_mid"
+				GetRandomInt(0, 0xffff),
 
-		// 16 bits for "time_hi_and_version"
-		// four most significant bits holds version number 4
-		(GetRandomInt(0, 0x0fff) | 0x4000),
+				// 16 bits for "time_hi_and_version"
+				// four most significant bits holds version number 4
+				(GetRandomInt(0, 0x0fff) | 0x4000),
 
-		// 16 bits, 8 bits for "clk_seq_hi_res",
-		// 8 bits for "clk_seq_low",
-		// two most significant bits holds zero and one for variant DCE1.1
-		(GetRandomInt(0, 0x3fff) | 0x8000),
+				// 16 bits, 8 bits for "clk_seq_hi_res",
+				// 8 bits for "clk_seq_low",
+				// two most significant bits holds zero and one for variant DCE1.1
+				(GetRandomInt(0, 0x3fff) | 0x8000),
 
-		// 48 bits for node
-		GetRandomInt(0, 0xffff), GetRandomInt(0, 0xffff), GetRandomInt(0, 0xffff)
-	);
+				// 48 bits for node
+				GetRandomInt(0, 0xffff), GetRandomInt(0, 0xffff), GetRandomInt(0, 0xffff));
+}
+
+stock void Karyuu_FillString(char[] sBuffer, int iLength)
+{
+	int iStart = strlen(sBuffer);
+	for (int i = iStart; i < iLength; i++)
+		sBuffer[i] = ' ';
+
+	sBuffer[iLength] = '\0';
 }
